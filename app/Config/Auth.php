@@ -114,7 +114,7 @@ class Auth extends ShieldAuth
      * The available authentication systems, listed
      * with alias and class name. These can be referenced
      * by alias in the auth helper:
-     *      auth('tokens')->attempt($credentials);
+     * auth('tokens')->attempt($credentials);
      *
      * @var array<string, class-string<AuthenticatorInterface>>
      */
@@ -300,7 +300,7 @@ class Auth extends ShieldAuth
      * first and/or last names. $personalFields is where you can add
      * fields to be considered as "personal" by the NothingPersonalValidator.
      * For example:
-     *     $personalFields = ['firstname', 'lastname'];
+     * $personalFields = ['firstname', 'lastname'];
      */
     public array $personalFields = [];
 
@@ -334,7 +334,7 @@ class Auth extends ShieldAuth
      * perfectly acceptable which clearly they are not.
      *
      * To disable similarity checking set the value to 0.
-     *     public $maxSimilarity = 0;
+     * public $maxSimilarity = 0;
      */
     public int $maxSimilarity = 50;
 
@@ -441,8 +441,16 @@ class Auth extends ShieldAuth
      */
     public function loginRedirect(): string
     {
+        $user = auth()->user();
+
+        if ($user->inGroup('superadmin', 'admin', 'developer')) {
+            $url = 'admin-dashboard';
+        } else {
+            $url = '/';
+        }
+
         $session = session();
-        $url     = $session->getTempdata('beforeLoginUrl') ?? setting('Auth.redirects')['login'];
+        $url     = $session->getTempdata('beforeLoginUrl') ?? $url;
 
         return $this->getUrl($url);
     }
@@ -464,7 +472,13 @@ class Auth extends ShieldAuth
      */
     public function registerRedirect(): string
     {
-        $url = setting('Auth.redirects')['register'];
+        $user = auth()->user();
+
+        if ($user && $user->inGroup('user')) {
+            $url = '/';
+        } else {
+            $url = setting('Auth.redirects')['register'];
+        }
 
         return $this->getUrl($url);
     }
