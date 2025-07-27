@@ -23,10 +23,9 @@ class AuthGroupsFilter implements FilterInterface
         // Get the user's groups (roles), assuming they are stored in the user session
         $userGroups = $user['groups'] ?? []; // Adjust according to how you're storing groups
 
-        // Check if the user has one of the required groups (superadmin or customer)
         if (!empty($arguments) && !array_intersect($arguments, $userGroups)) {
             // If the user does not have any of the required groups, deny access
-            return redirect()->to('/'); // <--- Change this line to redirect to the home page
+            return redirect()->to('/'); // Redirect to a different page, like the home page
         }
 
         // Optionally, you can add more checks or logging logic here
