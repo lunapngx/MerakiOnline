@@ -1,4 +1,4 @@
-<?= $this->extend('layout/admin_master') ?>
+<?= $this->extend('layout/main') ?>
 
 <?= $this->section('content') ?>
     <div class="content-wrapper">
