@@ -25,7 +25,7 @@
 
 <div class="content">
     <div class="header">
-        Logged in as: <strong><?= user()->email ?? 'Admin' ?></strong>
+        Logged in as: <strong><?= auth()->user()->email ?? 'Admin' ?></strong>
     </div>
 
     <main>

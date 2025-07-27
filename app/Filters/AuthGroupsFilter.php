@@ -26,7 +26,7 @@ class AuthGroupsFilter implements FilterInterface
         // Check if the user has one of the required groups (superadmin or customer)
         if (!empty($arguments) && !array_intersect($arguments, $userGroups)) {
             // If the user does not have any of the required groups, deny access
-            return redirect()->to('/no-access'); // Redirect to a "no access" page
+            return redirect()->to('/'); // <--- Change this line to redirect to the home page
         }
 
         // Optionally, you can add more checks or logging logic here
@@ -36,6 +36,5 @@ class AuthGroupsFilter implements FilterInterface
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         // Optionally, you can perform actions after the request has been processed
-        // For example, logging or adding additional headers
     }
 }

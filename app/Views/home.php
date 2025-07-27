@@ -6,7 +6,7 @@
         <a href="/cart">Cart</a>
 
         <?php if (auth()->loggedIn()) : ?>
-            <span>Hello, <?= esc(user()->email) ?></span>
+            <span>Hello, <?= esc(auth()->user()->email) ?></span>
             <a href="/logout">Logout</a>
         <?php else : ?>
             <a href="/login">Login</a>

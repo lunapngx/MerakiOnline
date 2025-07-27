@@ -443,7 +443,7 @@ class Auth extends ShieldAuth
     {
         $user = auth()->user();
 
-        if ($user->inGroup('superadmin', 'admin', 'developer')) {
+        if ($user->inGroup('superadmin')) {
             $url = 'admin-dashboard';
         } else {
             $url = '/';
