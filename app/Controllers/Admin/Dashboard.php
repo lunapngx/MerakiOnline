@@ -18,10 +18,10 @@ class Dashboard extends BaseController
         // Pass the data to the view
         $data = [
             'title' => 'Dashboard',
-            'product_count' => $productCount,
+            'total_products' => $productCount,
         ];
 
-        // Render the dashboard view with the data
+        // Correctly render the dashboard view with the data
         return view('admin/dashboard', $data);
     }
 }

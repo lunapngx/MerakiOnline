@@ -443,10 +443,13 @@ class Auth extends ShieldAuth
     {
         $user = auth()->user();
 
-        if ($user->inGroup('superadmin')) {
+        // Admin users should be redirected to the admin dashboard.
+        if ($user->inGroup('superadmin') || $user->inGroup('admin')) {
             $url = 'admin-dashboard';
-        } else {
-            $url = '/';
+        }
+        // All other authenticated users should be redirected to their account page.
+        else {
+            $url = 'account';
         }
 
         $session = session();
@@ -472,13 +475,8 @@ class Auth extends ShieldAuth
      */
     public function registerRedirect(): string
     {
-        $user = auth()->user();
-
-        if ($user && $user->inGroup('user')) {
-            $url = '/';
-        } else {
-            $url = setting('Auth.redirects')['register'];
-        }
+        // New users should be redirected to their account page after registration.
+        $url = 'account';
 
         return $this->getUrl($url);
     }

@@ -27,9 +27,6 @@ $routes->group('/', ['filter' => 'session'], function($routes) {
     $routes->get('checkout', 'CheckoutController::view', ['as' => 'checkout_view']);
 });
 
-// TEMPORARY: Route for assigning admin group by email
-$routes->get('makeAdmin/(:segment)', 'Home::makeAdmin/$1');
-
 // Admin Routes (Secured by a filter)
 $routes->group('admin', ['filter' => 'auth-groups:superadmin,admin'], function($routes) {
     $routes->get('/', 'Admin\Dashboard::index', ['as' => 'admin-dashboard']);
