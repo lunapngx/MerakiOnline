@@ -1,25 +1,142 @@
-<?php
+<?php namespace App\Controllers; // Namespace must be App\Controllers as per your file structure
 
-namespace App\Controllers;
+use App\Controllers\BaseController;
+use CodeIgniter\HTTP\ResponseInterface;
 
-use CodeIgniter\Shield\Models\UserModel;// Add this line to use the User Model
-
+/**
+ * AccountController serves as the single entry point for the user's consolidated account dashboard.
+ * All specific account sections (orders, settings, addresses, etc.) are handled dynamically
+ * within the 'myprofile.php' view via JavaScript.
+ */
 class AccountController extends BaseController
 {
-    public function index()
+    /**
+     * Loads the main user account dashboard view.
+     * This view contains the sidebar navigation and all content sections.
+     * The specific section to display initially is determined by JavaScript based on the URL path.
+     */
+    public function index(): ResponseInterface
     {
-        // Get the current logged-in user's ID
-        $userId = auth()->user()->id;
+        // Ensure the user is logged in before accessing any account features
+        if (!auth()->loggedIn()) {
+            return redirect()->to(url_to('login')); // Redirect unauthenticated users to the login page
+        }
 
-        // Get the user's full data from the database
-        $userModel = new UserModel();
-        $user = $userModel->find($userId);
+        // Fetch the current authenticated user object to pass to the view
+        $user = auth()->user();
 
-        // Pass the user data to the view
+        // Prepare data to be passed to the view
         $data = [
-            'user' => $user,
+            'title' => 'My Account Dashboard', // A general title for the entire account area
+            'user' => $user, // User data for profile summary or forms
+            // You can add more data here that might be needed globally across the account dashboard,
+            // or fetch specific data for sections using AJAX if they are very large.
         ];
 
-        return view('home', $data);
+        // Load the main consolidated view file for the user account dashboard
+        // as content within the master layout.
+        return $this->response->setBody(
+            view('layouts/master', [
+                'title' => $data['title'],
+                'content' => view('content/myprofile', $data) // Ensure this path is correct
+            ])
+        );
+    }
+
+    /**
+     * Handles the 'My Orders' section of the account.
+     */
+    public function orders()
+    {
+        if (!auth()->loggedIn()) {
+            return redirect()->to(url_to('login'));
+        }
+        // Data for the 'My Orders' section, if needed
+        $data = [
+            'title' => 'My Orders',
+            'user' => auth()->user(),
+            // Fetch user's orders here
+        ];
+        return view('layouts/master', ['title' => $data['title'], 'content' => view('content/myprofile', $data)]);
+    }
+
+    /**
+     * Handles the 'Account Settings' section of the account.
+     */
+    public function settings()
+    {
+        if (!auth()->loggedIn()) {
+            return redirect()->to(url_to('login'));
+        }
+        $data = [
+            'title' => 'Account Settings',
+            'user' => auth()->user(),
+            // Data for settings forms
+        ];
+        return view('layouts/master', ['title' => $data['title'], 'content' => view('content/myprofile', $data)]);
+    }
+
+    /**
+     * Handles the 'Payment Methods' section of the account.
+     */
+    public function paymentMethods()
+    {
+        if (!auth()->loggedIn()) {
+            return redirect()->to(url_to('login'));
+        }
+        $data = [
+            'title' => 'Payment Methods',
+            'user' => auth()->user(),
+            // Data for payment methods
+        ];
+        return view('layouts/master', ['title' => $data['title'], 'content' => view('content/myprofile', $data)]);
+    }
+
+    /**
+     * Handles the 'My Reviews' section of the account.
+     */
+    public function reviews()
+    {
+        if (!auth()->loggedIn()) {
+            return redirect()->to(url_to('login'));
+        }
+        $data = [
+            'title' => 'My Reviews',
+            'user' => auth()->user(),
+            // Data for user reviews
+        ];
+        return view('layouts/master', ['title' => $data['title'], 'content' => view('content/myprofile', $data)]);
+    }
+
+    /**
+     * Handles the 'Addresses' section of the account.
+     */
+    public function addresses()
+    {
+        if (!auth()->loggedIn()) {
+            return redirect()->to(url_to('login'));
+        }
+        $data = [
+            'title' => 'My Addresses',
+            'user' => auth()->user(),
+            // Data for user addresses
+        ];
+        return view('layouts/master', ['title' => $data['title'], 'content' => view('content/myprofile', $data)]);
+    }
+
+    /**
+     * Handles the 'Help Center' section of the account.
+     */
+    public function help()
+    {
+        if (!auth()->loggedIn()) {
+            return redirect()->to(url_to('login'));
+        }
+        $data = [
+            'title' => 'Help Center',
+            'user' => auth()->user(),
+            // Data for help content
+        ];
+        return view('layouts/master', ['title' => $data['title'], 'content' => view('content/myprofile', $data)]);
     }
 }

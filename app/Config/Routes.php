@@ -35,7 +35,21 @@ $routes->group('user', ['filter' => 'auth-groups:user,superadmin,admin'], functi
     $routes->get('account', 'AccountController::index', ['as' => 'account']);
     $routes->get('account/orders', 'AccountController::orders', ['as' => 'account_orders']);
     $routes->get('account/wishlist', 'AccountController::wishlist', ['as' => 'account_wishlist']);
+    $routes->get('/', 'AccountController::index', ['as' => 'account_profile']);
+    $routes->get('orders', 'AccountController::orders', ['as' => 'account_orders']);
+    $routes->get('wishlist', 'WishlistController::index', ['as' => 'account_wishlist']);
+    $routes->get('settings', 'AccountController::settings', ['as' => 'account_settings']);
+    $routes->get('payment-methods', 'AccountController::paymentMethods', ['as' => 'account_payment_methods']);
+    $routes->get('reviews', 'AccountController::reviews', ['as' => 'account_reviews']);
+    $routes->get('addresses', 'AccountController::addresses', ['as' => 'account_addresses']);
+    $routes->get('help', 'AccountController::help', ['as' => 'account_help']);
 });
+
+// --- NEW LEGAL PAGES ROUTES (UPDATED TO NEW CONTROLLER) ---
+$routes->get('useragreements', 'LegalController::userAgreements', ['as' => 'user_agreements']);
+$routes->get('contact-us', 'Home::contactUs', ['as' => 'contact_us']);
+$routes->get('privacy-policy', 'Home::privacyPolicy', ['as' => 'privacy_policy']);
+$routes->get('terms-and-conditions', 'Home::termsAndConditions', ['as' => 'terms_and_conditions']);
 
 // Admin Routes (Secured by a filter)
 $routes->group('admin', ['filter' => 'auth-groups:superadmin,admin'], function($routes) {
