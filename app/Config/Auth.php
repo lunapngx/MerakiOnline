@@ -448,18 +448,15 @@ class Auth extends ShieldAuth
         $user = auth()->user();
         $session = session();
 
-        // If the user is an admin or superadmin, ALWAYS redirect them to the admin dashboard.
-        if ($user->inGroup('superadmin') || $user->inGroup('admin')) {
+        // If the user is logged in AND an admin, ALWAYS redirect them to the admin dashboard.
+        if (auth()->loggedIn() && ($user->inGroup('superadmin') || $user->inGroup('admin'))) {
             $session->removeTempdata('beforeLoginUrl');
             return $this->getUrl('admin-dashboard');
         }
 
-        // For non-admin users, use the 'beforeLoginUrl' if available, otherwise default to the account page.
+        // For all other users, use the 'beforeLoginUrl' if available, otherwise default to the account page.
         $url = $session->getTempdata('beforeLoginUrl') ?? 'account';
         $session->removeTempdata('beforeLoginUrl');
-
-        // --- ADD THIS LINE FOR TESTING ---
-        die('Redirecting to: ' . $this->getUrl($url));
 
         return $this->getUrl($url);
     }

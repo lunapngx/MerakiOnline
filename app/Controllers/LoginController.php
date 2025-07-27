@@ -50,6 +50,12 @@ class LoginController extends BaseController
      */
     public function loginAction(): RedirectResponse
     {
+        // Check if the user is already logged in before trying to process the login form.
+        // This is the fix for the LogicException.
+        if (auth()->loggedIn()) {
+            return redirect()->to(config('Auth')->loginRedirect());
+        }
+
         // Validate here first, since some things,
         // like the password, can only be validated properly here.
         $rules = $this->getValidationRules();
@@ -73,14 +79,11 @@ class LoginController extends BaseController
             return redirect()->route('login')->withInput()->with('error', $result->reason());
         }
 
-        // --- IMPORTANT: TEMPORARY CHANGE FOR TESTING ---
-        // We will directly check the user's groups here and force a redirect.
-        $user = auth()->user();
-        if ($user->inGroup('superadmin') || $user->inGroup('admin')) {
-            return redirect()->to(url_to('admin-dashboard'))->withCookies();
+        // If an action has been defined for login, start it up.
+        if ($authenticator->hasAction()) {
+            return redirect()->route('auth-action-show')->withCookies();
         }
 
-        // For all other users, proceed with the original redirect logic
         return redirect()->to(config('Auth')->loginRedirect())->withCookies();
     }
 

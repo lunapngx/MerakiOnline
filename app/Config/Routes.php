@@ -19,8 +19,8 @@ $routes->get('cart', 'CartController::view', ['as' => 'cart_view']);
 $routes->get('categories', 'CategoryController::list', ['as' => 'categories_list']);
 
 // Routes for Authenticated Users (requires login)
-$routes->group('/', ['filter' => 'session'], function($routes) {
-    // These routes replace the old ones
+// Routes for Authenticated Users (requires login)
+$routes->group('user', ['filter' => 'session'], function($routes) {
     $routes->get('account', 'AccountController::index', ['as' => 'account']);
     $routes->get('account/orders', 'AccountController::orders', ['as' => 'account_orders']);
     $routes->get('account/wishlist', 'AccountController::wishlist', ['as' => 'account_wishlist']);
