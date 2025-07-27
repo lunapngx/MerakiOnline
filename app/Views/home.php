@@ -1,18 +1,4 @@
-<header>
-    <a href="/">Meraki Online Shopping</a>
-
-    <nav>
-        <a href="/">Home</a>
-        <a href="/cart">Cart</a>
-
-        <?php if (auth()->loggedIn()) : ?>
-            <span>Hello, <?= esc(auth()->user()->email) ?></span>
-            <a href="/logout">Logout</a>
-        <?php else : ?>
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        <?php endif; ?>
-    </nav><?= $this->extend('layouts/master') ?>
+</nav><?= $this->extend('layouts/master') ?>
 
     <?= $this->section('title') ?>Meraki Shop<?= $this->endSection() ?>
 

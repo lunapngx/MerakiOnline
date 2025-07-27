@@ -25,6 +25,6 @@ $routes->group('admin', ['filter' => 'auth-groups:superadmin,admin'], function($
     $routes->put('products/(:num)', 'Products::update/$1', ['as' => 'products-update']);
     $routes->delete('products/(:num)', 'Products::delete/$1', ['as' => 'products-delete']);
         // This is the new route that fixes the error
-    $routes->get('products/(:num)', 'Products::show/$1', ['as' => 'product-detail']);
+    $routes->get('product/(:segment)', 'Product::show/$1', ['as' => 'product-detail']);
 
 });
