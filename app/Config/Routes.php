@@ -7,36 +7,40 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('about', 'Home::about', ['as' => 'about']);
+
+// Categories route
 $routes->get('categories', 'CategoryController::index', ['as' => 'categories_list']);
 
 // Public routes for Shield authentication
 service('auth')->routes($routes);
 
-// Public routes
-$routes->post('cart/add', 'Cart::add');
-
-// These routes replace the old ones
-$routes->get('product/(:num)', 'ProductController::detail/$1', ['as' => 'product_detail']);
-$routes->get('cart', 'CartController::view', ['as' => 'cart_view']);
-$routes->get('categories', 'CategoryController::list', ['as' => 'categories_list']);
-
-// Cart and Checkout Routes (Combined)
+// Cart and Checkout Routes
 $routes->get('cart', 'CartController::index', ['as' => 'cart_view']);
 $routes->post('cart/add', 'CartController::add', ['as' => 'cart_add']);
-$routes->post('cart/update', 'CartController::update', ['as' => 'cart_update']); // Your route
-$routes->post('cart/remove', 'CartController::remove', ['as' => 'cart_remove']); // Your route (remote had remove/(:any))
+$routes->post('cart/update', 'CartController::update', ['as' => 'cart_update']);
+$routes->post('cart/remove', 'CartController::remove', ['as' => 'cart_remove']);
 $routes->get('checkout', 'CheckoutController::index', ['as' => 'checkout_view']);
-$routes->post('checkout/process', 'CheckoutController::process', ['as' => 'checkout_process']); // Your route
-$routes->post('order/place', 'OrderController::place', ['as' => 'order_place']); // Your route
-$routes->post('/checkout/place-order', 'OrderController::placeOrder', ['as' => 'place_order']); // Remote's explicit place order
+$routes->post('checkout/process', 'CheckoutController::process', ['as' => 'checkout_process']);
+$routes->post('order/place', 'OrderController::place', ['as' => 'order_place']);
+$routes->post('/checkout/place-order', 'OrderController::placeOrder', ['as' => 'place_order']);
 
-// Routes for Authenticated Users (requires login)
+// --- CHECKOUT ROUTE (FIXED) ---
+// This alias 'checkout' MUST match the url_to() call in your views (e.g., Cart/cart.php)
+$routes->get('checkout', 'CheckoutController::index', ['as' => 'checkout']); // FIXED: Alias is 'checkout'
+// --- END CHECKOUT ROUTE ---
+
+$routes->post('checkout/process', 'CheckoutController::process', ['as' => 'checkout_process']);
+$routes->post('order/place', 'OrderController::place', ['as' => 'order_place']);
+$routes->post('/checkout/place-order', 'OrderController::placeOrder', ['as' => 'place_order']);
+
+// Product routes
+$routes->get('product/(:num)', 'ProductController::detail/$1', ['as' => 'product_detail']);
+
 // Routes for Authenticated Users (requires login)
 $routes->group('user', ['filter' => 'auth-groups:user,superadmin,admin'], function($routes) {
     $routes->get('account', 'AccountController::index', ['as' => 'account']);
     $routes->get('account/orders', 'AccountController::orders', ['as' => 'account_orders']);
     $routes->get('account/wishlist', 'AccountController::wishlist', ['as' => 'account_wishlist']);
-    $routes->get('checkout', 'CheckoutController::view', ['as' => 'checkout_view']);
 });
 
 // Admin Routes (Secured by a filter)
