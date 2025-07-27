@@ -27,7 +27,7 @@
         <tr>
             <td><?= esc($product['id']) ?></td>
             <td><img src="<?= base_url($product['image']) ?>" alt="<?= esc($product['name']) ?>" width="50"></td>
-            <td><a href="<?= url_to('product-detail', $product['id']) ?>"><?= esc($product['name']) ?></a></td>
+            <td><?= esc($product['name']) ?></td>
             <td>$<?= esc(number_format($product['price'], 2)) ?></td>
             <td>
                 <a href="<?= url_to('products-edit', $product['id']) ?>">Edit</a>

@@ -18,8 +18,13 @@ $routes->get('cart', 'Cart::index');
 // Admin Routes (Secured by a filter)
 $routes->group('admin', ['filter' => 'auth-groups:superadmin,admin'], function($routes) {
     $routes->get('/', 'Admin\Dashboard::index', ['as' => 'admin-dashboard']);
+    $routes->get('products', 'Products::index', ['as' => 'products-index']);
+    $routes->get('products/new', 'Products::new', ['as' => 'products-new']);
+    $routes->post('products', 'Products::create', ['as' => 'products-create']);
+    $routes->get('products/edit/(:num)', 'Products::edit/$1', ['as' => 'products-edit']);
+    $routes->put('products/(:num)', 'Products::update/$1', ['as' => 'products-update']);
+    $routes->delete('products/(:num)', 'Products::delete/$1', ['as' => 'products-delete']);
+        // This is the new route that fixes the error
+    $routes->get('products/(:num)', 'Products::show/$1', ['as' => 'product-detail']);
 
-
-    // Resourceful routes for Products (CRUD)
-    $routes->resource('products', ['controller' => 'Admin\Products', 'as' => 'products']);
 });

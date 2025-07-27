@@ -4,95 +4,202 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\ProductModel;
+use CodeIgniter\Files\File;
+use CodeIgniter\HTTP\RedirectResponse;
 
 class Products extends BaseController
 {
-    protected $productModel;
+    protected ProductModel $productModel;
 
     public function __construct()
     {
         $this->productModel = new ProductModel();
     }
 
-    // Displays a list of all products
-    public function index()
+    /**
+     * Displays a list of all products.
+     */
+    public function index(): string
     {
         $data = [
             'products' => $this->productModel->findAll(),
-            'title'    => 'Products Management'
+            'title'    => 'Products Management',
         ];
+
         return view('admin/products/index', $data);
     }
 
-    // Displays the form to create a new product
-    public function new()
+    /**
+     * Displays the form to create a new product.
+     */
+    public function new(): string
     {
         return view('admin/products/new');
     }
 
-    // Handles the form submission for creating a new product
-    public function create()
+    /**
+     * Handles the form submission for creating a new product.
+     *
+     * @return RedirectResponse
+     */
+    public function create(): RedirectResponse
     {
-        if (!$this->validate($this->productModel->getValidationRules())) {
+        $rules = [
+            'name'        => 'required|max_length[255]',
+            'description' => 'required',
+            'price'       => 'required|numeric',
+            'stock'       => 'required|integer',
+            'image'       => [
+                'rules'  => 'uploaded[image]|max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => 'Please select a valid image file.',
+                    'max_size' => 'The image file is too large.',
+                    'is_image' => 'The file must be an image.',
+                    'mime_in'  => 'The image must be a JPG, JPEG, or PNG.',
+                ],
+            ],
+        ];
+
+        if (! $this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        $file = $this->request->getFile('image');
+
         $data = $this->request->getPost();
 
-        // Handle image upload
-        $file = $this->request->getFile('image');
-        if ($file->isValid() && !$file->hasMoved()) {
+        if ($file->isValid() && ! $file->hasMoved()) {
             $newName = $file->getRandomName();
-            $file->move(WRITEPATH . 'uploads', $newName);
-            $data['image'] = $newName;
+            $file->move(FCPATH . 'uploads', $newName);
+            $data['image'] = 'uploads/' . $newName;
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Image upload failed.');
         }
 
-        $this->productModel->insert($data);
-        return redirect()->to('admin/products')->with('success', 'Product created successfully.');
+        if ($this->productModel->insert($data)) {
+            return redirect()->to(url_to('products-index'))->with('success', 'Product created successfully.');
+        }
+
+        return redirect()->back()->withInput()->with('error', 'Failed to create product.');
     }
 
-    // Displays the form to edit a product
-    public function edit($id = null)
+    /**
+     * Displays the form to edit a product.
+     *
+     * @param int|string|null $id
+     */
+    public function edit($id = null): string|RedirectResponse
     {
-        $data = [
-            'product' => $this->productModel->find($id)
-        ];
+        $product = $this->productModel->find($id);
+
+        if ($product === null) {
+            return redirect()->to(url_to('products-index'))->with('error', 'Product not found.');
+        }
+
+        $data = ['product' => $product];
+
         return view('admin/products/edit', $data);
     }
 
-    // Handles the form submission for updating a product
-    public function update($id = null)
+    /**
+     * Handles the form submission for updating a product.
+     *
+     * @param int|string|null $id
+     */
+    public function update($id = null): RedirectResponse
     {
-        if (!$this->validate($this->productModel->getValidationRules())) {
+        $product = $this->productModel->find($id);
+        if ($product === null) {
+            return redirect()->to(url_to('products-index'))->with('error', 'Product not found.');
+        }
+
+        // Validation rules for update (image is optional)
+        $rules = [
+            'name'        => 'required|max_length[255]',
+            'description' => 'required',
+            'price'       => 'required|numeric',
+            'stock'       => 'required|integer',
+        ];
+
+        $file = $this->request->getFile('image');
+        if ($file->isValid() && ! $file->hasMoved()) {
+            $rules['image'] = [
+                'rules'  => 'uploaded[image]|max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => 'Please select a valid image file.',
+                    'max_size' => 'The image file is too large.',
+                    'is_image' => 'The file must be an image.',
+                    'mime_in'  => 'The image must be a JPG, JPEG, or PNG.',
+                ],
+            ];
+        }
+
+        if (! $this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
         $data = $this->request->getPost();
 
-        // Handle image upload for updates
-        $file = $this->request->getFile('image');
-        if ($file->isValid() && !$file->hasMoved()) {
+        if ($file->isValid() && ! $file->hasMoved()) {
             // Delete old image if it exists
-            $oldImage = $this->productModel->find($id)['image'];
-            if ($oldImage && file_exists(WRITEPATH . 'uploads/' . $oldImage)) {
-                unlink(WRITEPATH . 'uploads/' . $oldImage);
+            $oldImage = $product['image'] ?? null;
+            if ($oldImage !== null && file_exists(FCPATH . $oldImage)) {
+                unlink(FCPATH . $oldImage);
             }
+
             $newName = $file->getRandomName();
-            $file->move(WRITEPATH . 'uploads', $newName);
-            $data['image'] = $newName;
-        } else {
-            // Unset the image from data to prevent it from being saved as null
-            unset($data['image']);
+            $file->move(FCPATH . 'uploads', $newName);
+            $data['image'] = 'uploads/' . $newName;
         }
 
-        $this->productModel->update($id, $data);
-        return redirect()->to('admin/products')->with('success', 'Product updated successfully.');
+        if ($this->productModel->update($id, $data)) {
+            return redirect()->to(url_to('products-index'))->with('success', 'Product updated successfully.');
+        }
+
+        return redirect()->back()->withInput()->with('error', 'Failed to update product.');
     }
 
-    // Deletes a product
-    public function delete($id = null)
+    /**
+     * Deletes a product.
+     *
+     * @param int|string|null $id
+     */
+    public function delete($id = null): RedirectResponse
     {
-        $this->productModel->delete($id);
-        return redirect()->to('admin/products')->with('success', 'Product deleted successfully.');
+        $product = $this->productModel->find($id);
+
+        if ($product === null) {
+            return redirect()->to(url_to('products-index'))->with('error', 'Product not found.');
+        }
+
+        // Delete the associated image file
+        $oldImage = $product['image'] ?? null;
+        if ($oldImage !== null && file_exists(FCPATH . $oldImage)) {
+            unlink(FCPATH . $oldImage);
+        }
+
+        if ($this->productModel->delete($id)) {
+            return redirect()->to(url_to('products-index'))->with('success', 'Product deleted successfully.');
+        }
+
+        return redirect()->to(url_to('products-index'))->with('error', 'Failed to delete product.');
+    }
+
+    /**
+     * Displays a single product's details.
+     *
+     * @param int|string|null $id
+     */
+    public function show($id = null): string|RedirectResponse
+    {
+        $product = $this->productModel->find($id);
+
+        if ($product === null) {
+            return redirect()->to(url_to('products-index'))->with('error', 'Product not found.');
+        }
+
+        $data = ['product' => $product];
+
+        return view('admin/products/show', $data);
     }
 }
