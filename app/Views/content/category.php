@@ -1,35 +1,84 @@
+<?php
+
+use App\Models\CategoryModel;
+
+?>
 <?= $this->extend('layouts/master') ?>
 
-<?= $this->section('title') ?>AboutPage<?= $this->endSection() ?>
+<?= $this->section('title') ?>Categories<?= $this->endSection() ?>
+
+<?= $this->section('styles') ?>
+    <link rel="stylesheet" href="<?= base_url('public/assets/css/main.css') ?>">
+<?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-
-    <div class="about-container">
-        <h2 class="section-title"><b>About Meraki</b></h2>
-        <p class="about-description">
-            Meraki shopping cart system is a heartfelt brand that offers handmade crafts created with soul, creativity, and love. Specializing in crochet pieces, pins, fuzzy crafts, ribbon flower bouquets, other handcrafted pieces and customizable gift packages, Meraki transforms thoughtful gestures into tangible expressions of care. Every product is lovingly handcrafted to bring joy—not just to customers, but also to the special people they gift them to. Whether delivered personally or shipped with care, Meraki aims to create moments of happiness through meaningful, artfully made gifts.
-        </p>
-
-        <div class="mission-vision-boxes">
-            <div class="box">
-                <h3><b>Our Vision</b></h3>
-                <p>
-                    To become a beloved go-to brand for heartfelt handmade gifts, inspiring moments of joy and connection through soulful creations — from our hands to their hearts.                </p>
-            </div>
-            <div class="box">
-                <h3><b>Our Mission</b></h3>
-                <p>
-                    At Meraki, we pour soul, creativity, and love into every handmade craft — from crochet art and ribbon bouquets to personalized gift packages. We exist to create meaningful, memorable gifts that bring smiles to our customers and their loved ones. As a young, independent creator, we strive to grow a community that celebrates thoughtfulness, supports local artisans, and brings handcrafted beauty closer to everyone — online, at school pop-up booths, and soon, in our very own physical store.</div>
-            <div class="box">
-                <h3><b>Our Values</b></h3>
-                <p>
-                    We value creativity by bringing new and fun ideas into our designs and show our passion by making each item with care and love. We focus on quality, making sure every product looks good and lasts long. We want to spread joy through special gifts that build a connection between people, and we always act with honesty and respect in everything we do.                </p>
-            </div>
+    <div class="container category-page-grid">
+        <div class="category-sidebar">
+            <h3>Category</h3>
+            <nav class="category-list">
+                <ul>
+                    <?php
+                    // Fetch all categories for the sidebar if 'categories' isn't passed from controller
+                    // This assumes CategoryModel is available globally or passed
+                    $categoryModel = new CategoryModel();
+                    $allCategories = $categoryModel->findAll();
+                    ?>
+                    <?php if (!empty($allCategories)): ?>
+                        <?php foreach ($allCategories as $cat): ?>
+                            <li>
+                                <a href="<?= url_to('category', $cat['slug'] ?? $cat['id']) ?>">
+                                    <?= esc($cat['name']) ?> <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <li><p>No categories found.</p></li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
         </div>
-        <div class="lower-image-container">
-            <img src="<?= base_url('assets/img/meraki-logo.png') ?>" alt="Meraki Gift Shop Logo">
-        </div>
 
+        <div class="category-main-content">
+            <div class="search-filter-bar">
+                <input type="text" placeholder="Search products in this category...">
+                <button><i class="bi bi-search"></i></button>
+                <select>
+                    <option value="">Sort By</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="name-asc">Rose</option>
+                </select>
+            </div>
+
+            <?php if (isset($products) && !empty($products) && is_array($products)): ?>
+                <div class="category-product-grid">
+                    <?php foreach ($products as $product): ?>
+                        <div class="product-card">
+                            <a href="<?= url_to('product_detail', $product['id']) ?>">
+                                <div class="product-image">
+                                    <img src="<?= base_url('public/assets/img/' . $product['image']) ?>"
+                                         alt="<?= esc($product['name']) ?>">
+                                </div>
+                            </a>
+                            <div class="product-info">
+                                <h3>
+                                    <a href="<?= url_to('product_detail', $product['id']) ?>"><?= esc($product['name']) ?></a>
+                                </h3>
+                                <p class="price">₱<?= esc(number_format($product['price'], 2)) ?></p>
+                                <form action="<?= url_to('cart_add') ?>" method="post">
+                                    <?= csrf_field() ?>
+                                    <input type="hidden" name="product_id" value="<?= esc($product['id']) ?>">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn-add-to-cart">Add to Cart</button>
+                                </form>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <p>No products found in this category.</p>
+            <?php endif; ?>
+
+        </div>
     </div>
-
 <?= $this->endSection() ?>

@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('about', 'Home::about', ['as' => 'about']);
-$routes->get('categories', 'Home::categories', ['as' => 'categories_list']);
+$routes->get('categories', 'CategoryController::index', ['as' => 'categories_list']);
 
 // Public routes for Shield authentication
 service('auth')->routes($routes);
@@ -19,6 +19,16 @@ $routes->post('cart/add', 'Cart::add');
 $routes->get('product/(:num)', 'ProductController::detail/$1', ['as' => 'product_detail']);
 $routes->get('cart', 'CartController::view', ['as' => 'cart_view']);
 $routes->get('categories', 'CategoryController::list', ['as' => 'categories_list']);
+
+// Cart and Checkout Routes (Combined)
+$routes->get('cart', 'CartController::index', ['as' => 'cart_view']);
+$routes->post('cart/add', 'CartController::add', ['as' => 'cart_add']);
+$routes->post('cart/update', 'CartController::update', ['as' => 'cart_update']); // Your route
+$routes->post('cart/remove', 'CartController::remove', ['as' => 'cart_remove']); // Your route (remote had remove/(:any))
+$routes->get('checkout', 'CheckoutController::index', ['as' => 'checkout_view']);
+$routes->post('checkout/process', 'CheckoutController::process', ['as' => 'checkout_process']); // Your route
+$routes->post('order/place', 'OrderController::place', ['as' => 'order_place']); // Your route
+$routes->post('/checkout/place-order', 'OrderController::placeOrder', ['as' => 'place_order']); // Remote's explicit place order
 
 // Routes for Authenticated Users (requires login)
 // Routes for Authenticated Users (requires login)
