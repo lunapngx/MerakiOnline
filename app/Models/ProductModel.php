@@ -14,7 +14,7 @@ class ProductModel extends Model
     /**
      * Get the validation rules for product creation and updates.
      */
-    public function getValidationRules(): array
+    public function getValidationRules(array $options = []): array
     {
         return [
             'name'        => 'required|max_length[255]',

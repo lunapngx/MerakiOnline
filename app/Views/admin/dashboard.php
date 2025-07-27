@@ -1,4 +1,4 @@
-<?= $this->extend('layout/main') ?>
+<?= $this->extend('admin/layout/main') ?>
 
 <?= $this->section('content') ?>
     <div class="content-wrapper">
@@ -9,7 +9,7 @@
                         <h1 class="m-0">Dashboard</h1>
                     </div><div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="<?= url_to('admin_dashboard') ?>">Home</a></li>
+                            <li class="breadcrumb-item"><a href="<?= url_to('admin-dashboard') ?>">Home</a></li>
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                     </div></div></div></div>
@@ -31,10 +31,10 @@
                 </div>
                 <nav class="main-navigation">
                     <ul>
-                        <li><a href="<?= url_to('admin_dashboard') ?>">HOME</a></li>
-                        <li><a href="<?= url_to('admin_products') ?>">PRODUCTS</a></li>
-                        <li><a href="<?= url_to('admin_orders') ?>">ORDERS</a></li>
-                        <li><a href="<?= url_to('admin_users') ?>">CUSTOMERS</a></li>
+                        <li><a href="<?= url_to('admin-dashboard') ?>">HOME</a></li>
+                        <li><a href="<?= url_to('products-index') ?>">PRODUCTS</a></li>
+                        <li><a href="<?= url_to('admin-orders') ?>">ORDERS</a></li>
+                        <li><a href="<?= url_to('admin-users') ?>">CUSTOMERS</a></li>
                         <li><a href="#">SALES REPORT</a></li>
                     </ul>
                 </nav>

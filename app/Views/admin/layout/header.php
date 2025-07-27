@@ -7,11 +7,11 @@
 
         <nav class="admin-nav">
             <ul class="nav nav-pills">
-                <li class="nav-item"><a class="nav-link text-white" href="<?= url_to('admin_dashboard') ?>">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="<?= url_to('admin_products') ?>">Products</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="<?= url_to('admin_orders') ?>">Orders</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="<?= url_to('admin_sales_report') ?>">Sales Report</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="<?= url_to('admin_account') ?>">Admin Account</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="<?= url_to('admin-dashboard') ?>">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="<?= url_to('products-index') ?>">Products</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="<?= url_to('admin-orders') ?>">Orders</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="<?= url_to('admin-sales-report') ?>">Sales Report</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="<?= url_to('admin-account') ?>">Admin Account</a></li>
                 <li class="nav-item"><a class="nav-link btn btn-outline-light btn-sm ms-3" href="<?= url_to('logout') ?>">Logout</a></li>
             </ul>
         </nav>

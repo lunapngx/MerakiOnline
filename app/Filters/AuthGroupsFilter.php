@@ -9,31 +9,28 @@ use CodeIgniter\Config\Services;
 
 class AuthGroupsFilter implements FilterInterface
 {
-    // Called before the controller method
     public function before(RequestInterface $request, $arguments = null)
     {
-        // Get the user data (assuming you're using sessions to store logged-in user data)
-        $user = session()->get('user'); // Adjust based on how you retrieve the user data
+        // Get the authenticated user
+        $user = auth()->user();
 
         // Check if the user is logged in
         if (!$user) {
-            return redirect()->to('/login'); // Redirect to login if not logged in
+            return redirect()->to('/login');
         }
 
-        // Get the user's groups (roles), assuming they are stored in the user session
-        $userGroups = $user['groups'] ?? []; // Adjust according to how you're storing groups
+        // Get the user's groups from the Shield library
+        $userGroups = $user->getGroups();
 
+        // Check if the user has any of the required groups
         if (!empty($arguments) && !array_intersect($arguments, $userGroups)) {
             // If the user does not have any of the required groups, deny access
-            return redirect()->to('/'); // Redirect to a different page, like the home page
+            return redirect()->to('/');
         }
-
-        // Optionally, you can add more checks or logging logic here
     }
 
-    // Called after the controller method
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // Optionally, you can perform actions after the request has been processed
+        // No action needed after the controller method
     }
 }

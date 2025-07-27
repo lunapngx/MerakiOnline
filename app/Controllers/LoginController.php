@@ -73,11 +73,14 @@ class LoginController extends BaseController
             return redirect()->route('login')->withInput()->with('error', $result->reason());
         }
 
-        // If an action has been defined for login, start it up.
-        if ($authenticator->hasAction()) {
-            return redirect()->route('auth-action-show')->withCookies();
+        // --- IMPORTANT: TEMPORARY CHANGE FOR TESTING ---
+        // We will directly check the user's groups here and force a redirect.
+        $user = auth()->user();
+        if ($user->inGroup('superadmin') || $user->inGroup('admin')) {
+            return redirect()->to(url_to('admin-dashboard'))->withCookies();
         }
 
+        // For all other users, proceed with the original redirect logic
         return redirect()->to(config('Auth')->loginRedirect())->withCookies();
     }
 

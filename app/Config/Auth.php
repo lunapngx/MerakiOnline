@@ -439,21 +439,27 @@ class Auth extends ShieldAuth
      * Returns the URL that a user should be redirected
      * to after a successful login.
      */
+    /**
+     * Returns the URL that a user should be redirected
+     * to after a successful login.
+     */
     public function loginRedirect(): string
     {
         $user = auth()->user();
-
-        // Admin users should be redirected to the admin dashboard.
-        if ($user->inGroup('superadmin') || $user->inGroup('admin')) {
-            $url = 'admin-dashboard';
-        }
-        // All other authenticated users should be redirected to their account page.
-        else {
-            $url = 'account';
-        }
-
         $session = session();
-        $url     = $session->getTempdata('beforeLoginUrl') ?? $url;
+
+        // If the user is an admin or superadmin, ALWAYS redirect them to the admin dashboard.
+        if ($user->inGroup('superadmin') || $user->inGroup('admin')) {
+            $session->removeTempdata('beforeLoginUrl');
+            return $this->getUrl('admin-dashboard');
+        }
+
+        // For non-admin users, use the 'beforeLoginUrl' if available, otherwise default to the account page.
+        $url = $session->getTempdata('beforeLoginUrl') ?? 'account';
+        $session->removeTempdata('beforeLoginUrl');
+
+        // --- ADD THIS LINE FOR TESTING ---
+        die('Redirecting to: ' . $this->getUrl($url));
 
         return $this->getUrl($url);
     }
