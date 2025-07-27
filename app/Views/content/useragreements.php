@@ -1,4 +1,4 @@
-<?= $this->extend('Layout/master') ?> <!-- Adjusted path: Assuming your master layout is at app/Views/Customer/layout.php -->
+<?= $this->extend('layouts/master') ?> <!-- Adjusted path: Assuming your master layout is at app/Views/Customer/layout.php -->
 
 <?= $this->section('title') ?>
 Legal Information - Meraki Giftshop

@@ -11,9 +11,8 @@ class CheckoutController extends Controller
         // Load the 'form' helper (as previously done)
         helper('form');
         // Load the 'number' helper
-        helper('number'); // <--- Add this line
+        helper('number');
 
-        // ... (Your existing logic to get $items, calculate $subtotal, $shipping, $tax, $total)
         $items = []; // Initialize as empty array
         $session = session();
         if ($session->has('cart_items')) {
@@ -35,6 +34,7 @@ class CheckoutController extends Controller
             'pageTitle' => 'Checkout',
         ];
 
-        return view('Checkout/index', $data);
+        // The view path has been corrected to 'content/checkout' to match a common project structure.
+        return view('content/checkout', $data);
     }
 }

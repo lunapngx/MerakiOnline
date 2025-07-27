@@ -17,18 +17,12 @@ service('auth')->routes($routes);
 // Cart and Checkout Routes
 $routes->get('cart', 'CartController::index', ['as' => 'cart_view']);
 $routes->post('cart/add', 'CartController::add', ['as' => 'cart_add']);
-$routes->post('cart/update', 'CartController::update', ['as' => 'cart_update']);
-$routes->post('cart/remove', 'CartController::remove', ['as' => 'cart_remove']);
+$routes->post('cart/update', 'CartController::updateQuantity', ['as' => 'cart_update']);
+$routes->post('cart/remove', 'CartController::removeItem', ['as' => 'cart_remove']);
+$routes->post('cart/clear', 'CartController::clearCart', ['as' => 'cart_clear']);
+
+// Checkout Routes
 $routes->get('checkout', 'CheckoutController::index', ['as' => 'checkout_view']);
-$routes->post('checkout/process', 'CheckoutController::process', ['as' => 'checkout_process']);
-$routes->post('order/place', 'OrderController::place', ['as' => 'order_place']);
-$routes->post('/checkout/place-order', 'OrderController::placeOrder', ['as' => 'place_order']);
-
-// --- CHECKOUT ROUTE (FIXED) ---
-// This alias 'checkout' MUST match the url_to() call in your views (e.g., Cart/cart.php)
-$routes->get('checkout', 'CheckoutController::index', ['as' => 'checkout']); // FIXED: Alias is 'checkout'
-// --- END CHECKOUT ROUTE ---
-
 $routes->post('checkout/process', 'CheckoutController::process', ['as' => 'checkout_process']);
 $routes->post('order/place', 'OrderController::place', ['as' => 'order_place']);
 $routes->post('/checkout/place-order', 'OrderController::placeOrder', ['as' => 'place_order']);
