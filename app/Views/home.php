@@ -44,7 +44,7 @@
         </div>
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="row gy-4">
-                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-md-6 col-lg-3" data-aos="fade-up"ata-aos-delay="100">
                     <div class="product-card">
                         <div class="product-image">
                             <img src="<?= base_url('assets/img/1bestseller-angle1.jpg') ?>" class="img-fluid default-image" alt="Product" loading="lazy">

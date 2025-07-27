@@ -6,6 +6,8 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
+$routes->get('about', 'Home::about', ['as' => 'about']);
+$routes->get('categories', 'Home::categories', ['as' => 'categories_list']);
 
 // Public routes for Shield authentication
 service('auth')->routes($routes);
@@ -20,7 +22,7 @@ $routes->get('categories', 'CategoryController::list', ['as' => 'categories_list
 
 // Routes for Authenticated Users (requires login)
 // Routes for Authenticated Users (requires login)
-$routes->group('user', ['filter' => 'session'], function($routes) {
+$routes->group('user', ['filter' => 'auth-groups:user,superadmin,admin'], function($routes) {
     $routes->get('account', 'AccountController::index', ['as' => 'account']);
     $routes->get('account/orders', 'AccountController::orders', ['as' => 'account_orders']);
     $routes->get('account/wishlist', 'AccountController::wishlist', ['as' => 'account_wishlist']);
