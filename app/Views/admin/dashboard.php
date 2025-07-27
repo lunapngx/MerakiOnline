@@ -1,4 +1,4 @@
-0<?= $this->extend('admin/layouts/main') ?>
+0<?= $this->extend('admin/layout/main') ?>
 
 <?= $this->section('title') ?>Meraki Shop<?= $this->endSection() ?>
 

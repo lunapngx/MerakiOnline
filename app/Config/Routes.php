@@ -19,6 +19,7 @@ $routes->get('cart', 'Cart::index');
 $routes->group('admin', ['filter' => 'auth-groups:superadmin,admin'], function($routes) {
     $routes->get('/', 'Admin\Dashboard::index', ['as' => 'admin-dashboard']);
 
+
     // Resourceful routes for Products (CRUD)
     $routes->resource('products', ['controller' => 'Admin\Products', 'as' => 'products']);
 });
