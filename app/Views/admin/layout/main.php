@@ -35,8 +35,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <!-- Add any other specific admin CSS files here -->
-    <link href="<?= base_url('public/assets/css/main.css') ?>" rel="stylesheet">
-    <link href="<?= base_url('public/assets/css/admin.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/main.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/admin.css') ?>" rel="stylesheet">
 
     <?= $this->renderSection('styles') ?>
 </head>

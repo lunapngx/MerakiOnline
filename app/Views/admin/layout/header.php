@@ -17,9 +17,11 @@
         <div class="container-fluid container-xl">
             <div class="d-flex py-3 align-items-center justify-content-between">
 
-                <a href="<?= base_url('/') ?>" class="logo d-flex align-items-center">
-                    <h1 class="sitename">Meraki Shop</h1>
+                <a href="<?= url_to('admin-dashboard') ?>" class="logo d-flex align-items-center gap-2">
+                    <img src="/img/meraki-logo.png" alt="Meraki Gift Shop Logo" class="meraki-logo" style="height: 40px;">
+                    <h1 class="sitename m-0">Meraki Shop</h1>
                 </a>
+
 
                 <form class="search-form desktop-search-form">
                     <div class="input-group">
@@ -46,7 +48,7 @@
                             </div>
                             <div class="dropdown-body">
                                 <?php if (auth()->loggedIn()): ?>
-                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account_profile') ?>">
+                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('admin-account') ?>">
                                         <i class="bi bi-person-circle me-2"></i>
                                         <span>My Profile</span>
                                     </a>
@@ -76,12 +78,12 @@
         <div class="container-fluid container-xl">
             <div class="position-relative">
                 <nav id="navmenu" class="navmenu">
-                    <ul>
-                        <li><a href="<?= url_to('admin-dashboard') ?>">HOME</a></li>
-                        <li><a href="<?= url_to('products-index') ?>">PRODUCTS</a></li>
-                        <li><a href="<?= url_to('admin-orders') ?>">ORDERS</a></li>
-                        <li><a href="<?= url_to('admin-users') ?>">CUSTOMERS</a></li>
-                        <li><a href="#">SALES REPORT</a></li>
+                    <ul class="nav nav-pills">
+                        <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-dashboard') ?>">HOME</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-products') ?>">PRODUCTS</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-orders') ?>">ORDERS</a></li> </ul>
+                        <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-customer') ?>">CUSTOMERS</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-sales-report') ?>">SALE REPORT</a></li>
                     </ul>
                 </nav>
             </div>

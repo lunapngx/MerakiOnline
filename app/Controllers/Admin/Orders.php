@@ -8,6 +8,9 @@ class Orders extends BaseController
 {
     public function index()
     {
-        return view('admin/orders');
+        $data = [
+            'title' => 'Orders Management', // You can set any appropriate title here
+        ];
+        return view('admin/orders', $data);
     }
 }

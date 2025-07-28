@@ -10,13 +10,6 @@
     <div class="container admin-dashboard-page">
         <div class="admin-header-nav mb-4 bg-white py-3 shadow-sm rounded-bottom">
             <div class="container d-flex justify-content-center">
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-dashboard') ?>">HOME</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin_products') ?>">PRODUCTS</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="<?= url_to('admin_orders') ?>">ORDERS</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin_sales_report') ?>">SALES REPORT</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin_account') ?>">ADMIN ACCOUNT</a></li>
-                </ul>
             </div>
         </div>
 

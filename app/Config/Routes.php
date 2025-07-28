@@ -57,7 +57,7 @@ $routes->get('api/check_products', 'UpdateController::checkProducts', ['as' => '
 // Admin Routes (Secured by a filter)
 $routes->group('admin', ['filter' => 'auth-groups:superadmin,admin'], function($routes) {
     $routes->get('/', 'Admin\Dashboard::index', ['as' => 'admin-dashboard']);
-    $routes->get('products', 'Admin\Products::index', ['as' => 'products-index']);
+    $routes->get('products', 'Admin\Products::index', ['as' => 'admin-products']);
     $routes->get('products/new', 'Admin\Products::new', ['as' => 'products-new']);
     $routes->post('products', 'Admin\Products::create', ['as' => 'products-create']);
     $routes->get('products/edit/(:num)', 'Admin\Products::edit/$1', ['as' => 'products-edit']);
@@ -68,4 +68,6 @@ $routes->group('admin', ['filter' => 'auth-groups:superadmin,admin'], function($
     $routes->get('customer', 'Admin\Customer::index', ['as' => 'admin-customer']);
     $routes->get('sales-report', 'Admin\SalesReport::index', ['as' => 'admin-sales-report']);
     $routes->get('account', 'Admin\AdminAccount::index', ['as' => 'admin-account']);
+    $routes->get('users', 'Admin\Customer::index', ['as' => 'admin-users']);
+
 });
