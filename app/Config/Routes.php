@@ -51,6 +51,9 @@ $routes->get('contact-us', 'Home::contactUs', ['as' => 'contact_us']);
 $routes->get('privacy-policy', 'Home::privacyPolicy', ['as' => 'privacy_policy']);
 $routes->get('terms-and-conditions', 'Home::termsAndConditions', ['as' => 'terms_and_conditions']);
 
+// New route for real-time updates
+$routes->get('api/check_products', 'UpdateController::checkProducts', ['as' => 'api_check_products']);
+
 // Admin Routes (Secured by a filter)
 $routes->group('admin', ['filter' => 'auth-groups:superadmin,admin'], function($routes) {
     $routes->get('/', 'Admin\Dashboard::index', ['as' => 'admin-dashboard']);

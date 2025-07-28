@@ -31,39 +31,46 @@
 
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <table class="table table-hover">
+                <table class="table table-hover" id="orders-table">
                     <thead>
                     <tr>
                         <th>Order ID</th>
                         <th>User</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
                         <th>Total Amount</th>
                         <th>Status</th>
-                        <th>Order Date</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php if (!empty($orders)): ?>
                         <?php foreach ($orders as $order): ?>
-                            <tr>
+                            <tr id="order-row-<?= esc($order['id']) ?>">
                                 <td><?= esc($order['id']) ?></td>
                                 <td><?= esc($order['username']) ?></td>
-                                <td><?= esc($order['product_name']) ?></td>
-                                <td><?= esc($order['quantity']) ?></td>
                                 <td>₱<?= esc(number_format($order['total_amount'], 2)) ?></td>
-                                <td><?= esc(ucfirst($order['status'])) ?></td>
-                                <td><?= esc(date('Y-m-d H:i', strtotime($order['created_at']))) ?></td>
+                                <td class="order-status-cell"><?= esc(ucfirst($order['status'])) ?></td>
+                                <td>
+                                    <button class="btn btn-success btn-sm confirm-order-btn" data-order-id="<?= esc($order['id']) ?>">Confirm</button>
+                                    <button class="btn btn-danger btn-sm cancel-order-btn" data-order-id="<?= esc($order['id']) ?>">Cancel</button>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="7" class="text-center">No orders found.</td>
+                            <td colspan="5" class="text-center">No orders found.</td>
                         </tr>
                     <?php endif; ?>
                     </tbody>
                 </table>
             </div>
         </div>
+
+        // Add this JavaScript at the bottom of your file or in a separate script file
+        <script>
+            // This is where the real-time listening code would go.
+            // It would listen for an event like "new_order" and dynamically add a new row to the table.
+            // When the admin clicks 'Confirm' or 'Cancel', it would send a request to your backend to update the status.
+        </script>
+
     </div>
 <?= $this->endSection() ?>

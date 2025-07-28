@@ -10,10 +10,12 @@ use CodeIgniter\HTTP\RedirectResponse;
 class Products extends BaseController
 {
     protected ProductModel $productModel;
+    protected SystemStatusModel $systemStatusModel; // Add this line
 
     public function __construct()
     {
         $this->productModel = new ProductModel();
+        $this->systemStatusModel = new SystemStatusModel(); // Add this line
     }
 
     /**
@@ -29,13 +31,7 @@ class Products extends BaseController
         return view('admin/products/index', $data);
     }
 
-    /**
-     * Displays the form to create a new product.
-     */
-    public function new(): string
-    {
-        return view('admin/products/new');
-    }
+    // ... (rest of the controller code)
 
     /**
      * Handles the form submission for creating a new product.
@@ -77,6 +73,9 @@ class Products extends BaseController
         }
 
         if ($this->productModel->insert($data)) {
+            // Add this crucial line to update the timestamp
+            $this->systemStatusModel->update(1, ['last_product_update' => date('Y-m-d H:i:s')]);
+
             return redirect()->to(url_to('products-index'))->with('success', 'Product created successfully.');
         }
 
