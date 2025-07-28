@@ -1,9 +1,8 @@
-<?= $this->extend('Layout/master') ?>
+<?= $this->extend('admin/layout/main') ?>
 
 <?= $this->section('title') ?><?= esc($title) ?><?= $this->endSection() ?>
 
 <?= $this->section('styles') ?>
-    <link rel="stylesheet" href="<?= base_url('public/assets/css/main.css') ?>">
     <link rel="stylesheet" href="<?= base_url('public/assets/css/admin.css') ?>">
 <?= $this->endSection() ?>
 

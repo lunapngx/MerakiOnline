@@ -62,6 +62,7 @@ $routes->group('admin', ['filter' => 'auth-groups:superadmin,admin'], function($
     $routes->delete('products/(:num)', 'Admin\Products::delete/$1', ['as' => 'products-delete']);
     $routes->get('product/(:segment)', 'Admin\Products::show/$1', ['as' => 'product-detail']);
     $routes->get('orders', 'Admin\Orders::index', ['as' => 'admin-orders']);
+    $routes->get('customer', 'Admin\Customer::index', ['as' => 'admin-customer']);
     $routes->get('users', 'Admin\Users::index', ['as' => 'admin-users']);
     $routes->get('sales-report', 'Admin\SalesReport::index', ['as' => 'admin-sales-report']);
     $routes->get('account', 'Admin\AdminAccount::index', ['as' => 'admin-account']);

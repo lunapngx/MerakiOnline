@@ -2,17 +2,26 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller; // Import Controller if not already imported by BaseController
+use CodeIgniter\Controller;
+use App\Controllers\BaseController; // Ensure this is present
+use CodeIgniter\HTTP\ResponseInterface; // Import ResponseInterface
 
-class LegalController extends BaseController // Extend BaseController if you have one, otherwise extend Controller
+class LegalController extends BaseController
 {
     /**
      * Loads the combined user agreements page (Contact Us, Privacy Policy, Terms & Conditions).
-     * This method will render the HTML content you previously generated.
      */
-    public function userAgreements(): string
+    public function userAgreements(): ResponseInterface
     {
-        // This will load the HTML content from app/Views/home/useragreements.php
-        return view('home/useragreements');
+        // Define the title for the page
+        $data['title'] = 'Legal Information - Meraki Giftshop';
+
+        // Render the useragreements.php file first, then pass it as the 'content' section to the master layout
+        return $this->response->setBody(
+            view('layouts/master', [
+                'title' => $data['title'],
+                'content' => view('content/useragreements', $data)
+            ])
+        );
     }
 }

@@ -1,0 +1,523 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.content-wrapper {
+    background-color: #fff;
+    margin-left: 0;
+    padding: 0;
+    min-height: 100vh;
+    position: relative;
+}
+
+.top-navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #000;
+    border-bottom: 1px solid #ccc;
+}
+
+.logo-container .meraki-logo {
+    height: 60px;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    padding: 5px 15px;
+    width: 400px;
+}
+
+.search-bar-container input {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    flex-grow: 1;
+    background: transparent;
+}
+
+.search-bar-container button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.nav-icons-container a {
+    color: #000;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.main-navigation {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.main-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.main-navigation ul li a {
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 0;
+    transition: color 0.3s ease;
+}
+
+.main-navigation ul li a:hover {
+    color: #666;
+}
+
+.dashboard-content-area {
+    padding: 20px 70px;
+    background-color: #fff;
+    position: relative;
+    box-sizing: border-box;
+    min-height: 500px;
+}
+
+.info-cards-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.info-card {
+    background-color: white;
+    border-radius: 12px;
+    text-align: center;
+    padding: 25px 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+    flex: 1 1 calc(25% - 20px);
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-card .inner h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+    margin: 0;
+}
+
+.info-card .inner p {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+}
+
+.product-display-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 0 60px;
+    overflow: hidden;
+}
+
+.product-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 48%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.product-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.dashboard-content-area::before,
+.dashboard-content-area::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    background-repeat: repeat-y;
+    background-size: contain;
+    z-index: 1;
+}
+
+.dashboard-content-area::before {
+    left: 0;
+    background-image: url('/img/left-flower-border.png');
+}
+
+.dashboard-content-area::after {
+    right: 0;
+    background-image: url('/img/right-flower-border.png');
+}
+
+@media (max-width: 991.98px) {
+    .info-card {
+        flex: 1 1 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .top-navbar-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-bar-container {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .nav-icons-container {
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .main-navigation ul {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .product-item {
+        max-width: 100%;
+    }
+
+    .dashboard-content-area::before,
+    .dashboard-content-area::after {
+        width: 30px;
+    }
+
+    .dashboard-content-area {
+        padding: 20px 40px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .info-card {
+        flex: 1 1 100%;
+    }
+}
+.top-navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.logo-container .meraki-logo {
+    height: 60px;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 25px;
+    padding: 5px 15px;
+    width: 400px;
+}
+
+.search-bar-container input {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    background: transparent;
+    flex: 1;
+}
+
+.search-bar-container button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+}
+
+.nav-icons-container a {
+    color: #000;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.main-navigation {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.main-navigation ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 40px;
+    display: flex;
+    gap: 40px;
+}
+
+.main-navigation ul li a {
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+.main-navigation ul li a:hover,
+.main-navigation ul li a:focus,
+.main-navigation ul li a:active {
+    color: #000;
+    border: none;
+    text-decoration: none;
+}
+.top-navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.logo-container .meraki-logo {
+    height: 60px;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 25px;
+    padding: 5px 15px;
+    width: 400px;
+}
+
+.search-bar-container input {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    background: transparent;
+    flex: 1;
+}
+
+.search-bar-container button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+}
+
+.nav-icons-container a {
+    color: #000;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.main-navigation {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.main-navigation ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 40px;
+    display: flex;
+    gap: 40px;
+}
+
+.main-navigation ul li a {
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+.main-navigation ul li a:hover,
+.main-navigation ul li a:focus,
+.main-navigation ul li a:active {
+    color: #000;
+    border: none;
+    text-decoration: none;
+}
+.top-navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.logo-container .meraki-logo {
+    height: 60px;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 25px;
+    padding: 5px 15px;
+    width: 400px;
+}
+
+.search-bar-container input {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    background: transparent;
+    flex: 1;
+}
+
+.search-bar-container button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+}
+
+.nav-icons-container a {
+    color: #000;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.main-navigation {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.nav-left {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 40px;
+}
+
+.nav-left li a {
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+
+.nav-left li a:hover,
+.nav-left li a:focus,
+.nav-left li a:active {
+    color: #000;
+    border: none;
+    text-decoration: none;
+}
+
+
+.dashboard-content-area {
+    background-color: #f6f7f8;
+    padding: 40px 20px;
+    position: relative;
+}
+
+.dashboard-content-area::before,
+.dashboard-content-area::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    background-repeat: repeat-y;
+    background-size: contain;
+    z-index: 0;
+}
+
+.dashboard-content-area::before {
+    left: 0;
+    background-image: url('/img/left-flower-border.png');
+}
+
+.dashboard-content-area::after {
+    right: 0;
+    background-image: url('/img/right-flower-border.png');
+}
+
+.order-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.order-card {
+    background-color: #e3eced;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.order-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.order-card p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.order-card a {
+    color: #007bff;
+    text-decoration: underline;
+    word-break: break-word;
+}
+
+.order-card .btn-group {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.order-card .btn {
+    flex: 1;
+    font-size: 13px;
+}
