@@ -35,8 +35,7 @@ $routes->group('user', ['filter' => 'auth-groups:user,superadmin,admin'], functi
     $routes->get('account', 'AccountController::index', ['as' => 'account']);
     $routes->get('account/orders', 'AccountController::orders', ['as' => 'account_orders']);
     $routes->get('account/wishlist', 'AccountController::wishlist', ['as' => 'account_wishlist']);
-    // REMOVED this line to avoid redundancy/conflict with 'account'
-    // $routes->get('/', 'AccountController::index', ['as' => 'account_profile']);
+    $routes->get('/', 'AccountController::index', ['as' => 'account_profile']); // Uncommented line
     $routes->get('settings', 'AccountController::settings', ['as' => 'account_settings']);
     $routes->get('payment-methods', 'AccountController::paymentMethods', ['as' => 'account_payment_methods']);
     $routes->get('reviews', 'AccountController::reviews', ['as' => 'account_reviews']);

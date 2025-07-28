@@ -46,7 +46,7 @@
                             </div>
                             <div class="dropdown-body">
                                 <?php if (auth()->loggedIn()): ?>
-                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account_profile') ?>">
+                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account') ?>">
                                         <i class="bi bi-person-circle me-2"></i>
                                         <span>My Profile</span>
                                     </a>
@@ -54,7 +54,7 @@
                                         <i class="bi bi-bag-check me-2"></i>
                                         <span>My Orders</span>
                                     </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account_profile') ?>#wishlist">
+                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account') ?>#wishlist">
                                         <i class="bi bi-heart me-2"></i>
                                         <span>My Wishlist</span>
                                     </a>
@@ -78,7 +78,7 @@
                         </div>
                     </div>
 
-                    <a href="<?= url_to('account_profile') ?>#wishlist" class="header-action-btn d-none d-md-block">
+                    <a href="<?= url_to('account') ?>#wishlist" class="header-action-btn d-none d-md-block">
                         <i class="bi bi-heart"></i>
                         <span class="badge"></span>
                     </a>
