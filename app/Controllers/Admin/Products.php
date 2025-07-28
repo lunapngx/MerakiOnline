@@ -7,7 +7,7 @@ use App\Models\ProductModel;
 use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\RedirectResponse;
 use App\Models\SystemStatusModel;
-use App\Models\CategoryModel; // Add this line to import CategoryModel
+use App\Models\CategoryModel;
 
 class Products extends BaseController
 {
@@ -59,18 +59,12 @@ class Products extends BaseController
      */
     public function create(): RedirectResponse
     {
-        // ... (existing code for validation rules) ...
-
         $rules = [
             'name'        => 'required|max_length[255]',
             'description' => 'required',
             'price'       => 'required|numeric',
             'stock'       => 'required|integer',
-            'category_id' => 'required|integer', // Add validation rule for category_id
-            // TEMPORARY: For testing, allow image to be empty
-            'image'       => 'permit_empty', // <-- This line replaces the original 'image' rules array
-            // Original image rules (commented out for testing):
-            /*
+            'category_id' => 'required|integer',
             'image'       => [
                 'rules'  => 'uploaded[image]|max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
                 'errors' => [
@@ -80,7 +74,6 @@ class Products extends BaseController
                     'mime_in'  => 'The image must be a JPG, JPEG, or PNG.',
                 ],
             ],
-            */
         ];
 
         if (! $this->validate($rules)) {
@@ -89,10 +82,15 @@ class Products extends BaseController
 
         $file = $this->request->getFile('image');
 
-        $data = $this->request->getPost();
+        $data = [
+            'name'          => $this->request->getPost('name'),
+            'description'   => $this->request->getPost('description'),
+            'price'         => $this->request->getPost('price'),
+            'stock'         => $this->request->getPost('stock'),
+            'category_id'   => $this->request->getPost('category_id'),
+            'is_active'     => 1, // default, optional
+        ];
 
-        // TEMPORARY: For testing, comment out image upload and set a default path
-        /*
         if ($file->isValid() && ! $file->hasMoved()) {
             $newName = $file->getRandomName();
             $file->move(FCPATH . 'uploads', $newName);
@@ -100,19 +98,16 @@ class Products extends BaseController
         } else {
             return redirect()->back()->withInput()->with('error', 'Image upload failed.');
         }
-        */
-        $data['image'] = 'uploads/default_product.jpg'; // Use a default image for testing
-        // Make sure you have a 'default_product.jpg' in your public/uploads/ directory for this to work.
 
         if ($this->productModel->insert($data)) {
-            // Add this crucial line to update the timestamp
             $this->systemStatusModel->update(1, ['last_product_update' => date('Y-m-d H:i:s')]);
-
             return redirect()->to(url_to('products-index'))->with('success', 'Product created successfully.');
         }
 
         return redirect()->back()->withInput()->with('error', 'Failed to create product.');
     }
+
+
 
     /**
      * Displays the form to edit a product.
