@@ -13307,33 +13307,59 @@ body {
 }
 
 .dashboard-content-area {
-    padding: 20px 70px;
-    background-color: #fff;
-    position: relative;
-    box-sizing: border-box;
-    min-height: 500px;
+    padding: 20px;
+    background-color: #f4f6f9;
 }
 
 .info-cards-row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     gap: 20px;
+    justify-content: center;
     margin-bottom: 30px;
 }
 
+.info-cards-row > .col-lg-3,
+.info-cards-row > .col-6 {
+    flex: 1 1 22%;
+    max-width: 24%;
+    min-width: 180px;
+}
+
+@media (max-width: 991px) {
+    .info-cards-row > .col-lg-3 {
+        flex: 1 1 45%;
+        max-width: 48%;
+    }
+}
+
+@media (max-width: 575px) {
+    .info-cards-row > .col-6 {
+        flex: 1 1 90%;
+        max-width: 95%;
+    }
+}
+
 .info-card {
-    background-color: white;
-    border-radius: 12px;
-    text-align: center;
-    padding: 25px 15px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    border: 1px solid #ddd;
-    flex: 1 1 calc(25% - 20px);
-    min-height: 140px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    text-align: center;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.info-card .inner {
+    padding: 20px;
+    width: 100%;
 }
 
 .info-card .inner h3 {
@@ -13865,37 +13891,106 @@ body {
 }
 
 .info-card h3 {
-    font-size: 28px;
-    font-weight: 700;
-    color: #000;
-    margin: 0;
+    font-size: 2.2rem;
+    color: #333;
+    font-weight: 800;
+    margin-bottom: 0;
 }
 
 .info-card p {
-    font-size: 16px;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
     font-weight: 600;
-    color: #000;
-    text-transform: uppercase;
-    margin: 0 0 8px;
 }
 
 /* Product Display Section */
 .product-display-section {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
     justify-content: center;
-    overflow: hidden;
-    padding-top: 20px;
+    gap: 30px;
+    position: relative;
+    padding: 20px 0;
 }
 
+.product-display-section::before,
+.product-display-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    background-image: url('https://placehold.co/100x600/F8F8F8/000000?text=Floral+Pattern');
+    background-size: contain;
+    background-repeat: repeat-y;
+    z-index: 1;
+    opacity: 0.7;
+}
+
+.product-display-section::before {
+    left: -100px;
+}
+
+.product-display-section::after {
+    right: -100px;
+}
+
+.container-fluid {
+    position: relative;
+    z-index: 2;
+    padding-left: 120px;
+    padding-right: 120px;
+}
+
+@media (max-width: 768px) {
+    .product-display-section::before,
+    .product-display-section::after {
+        width: 50px;
+        background-size: contain;
+    }
+
+    .container-fluid {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+}
+
+
 .product-item {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    width: 100%;
-    max-width: 48%; /* To fit two items per row */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 1 1 45%;
+    max-width: 48%;
+    min-width: 250px;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.product-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.product-display-section > .col-md-6 {
+    flex: 1 1 45%;
+    max-width: 48%;
+}
+
+@media (max-width: 767px) {
+    .product-display-section > .col-md-6 {
+        flex: 1 1 90%;
+        max-width: 95%;
+    }
 }
 
 .product-item img {
