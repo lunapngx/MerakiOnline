@@ -52,6 +52,7 @@ $routes->get('terms-and-conditions', 'Home::termsAndConditions', ['as' => 'terms
 
 // Real-time update API route (Public-facing, moved outside admin group)
 $routes->get('api/check_products', 'UpdateController::checkProducts', ['as' => 'api_check_products']);
+$routes->get('api/check-products', 'Api\ProductsApi::checkProducts', ['as' => 'api_check_products']);
 
 
 // Admin Routes (Secured by a filter)

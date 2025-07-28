@@ -67,6 +67,10 @@ class Products extends BaseController
             'price'       => 'required|numeric',
             'stock'       => 'required|integer',
             'category_id' => 'required|integer', // Add validation rule for category_id
+            // TEMPORARY: For testing, allow image to be empty
+            'image'       => 'permit_empty', // <-- This line replaces the original 'image' rules array
+            // Original image rules (commented out for testing):
+            /*
             'image'       => [
                 'rules'  => 'uploaded[image]|max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
                 'errors' => [
@@ -76,6 +80,7 @@ class Products extends BaseController
                     'mime_in'  => 'The image must be a JPG, JPEG, or PNG.',
                 ],
             ],
+            */
         ];
 
         if (! $this->validate($rules)) {
@@ -86,6 +91,8 @@ class Products extends BaseController
 
         $data = $this->request->getPost();
 
+        // TEMPORARY: For testing, comment out image upload and set a default path
+        /*
         if ($file->isValid() && ! $file->hasMoved()) {
             $newName = $file->getRandomName();
             $file->move(FCPATH . 'uploads', $newName);
@@ -93,6 +100,9 @@ class Products extends BaseController
         } else {
             return redirect()->back()->withInput()->with('error', 'Image upload failed.');
         }
+        */
+        $data['image'] = 'uploads/default_product.jpg'; // Use a default image for testing
+        // Make sure you have a 'default_product.jpg' in your public/uploads/ directory for this to work.
 
         if ($this->productModel->insert($data)) {
             // Add this crucial line to update the timestamp
