@@ -571,8 +571,9 @@ h6 {
         color: var(--nav-color);
         padding: 18px 15px;
         font-size: 15px;
+        font-color: #310E10;
         font-family: var(--nav-font);
-        font-weight: 400;
+        font-weight: 600;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -13972,4 +13973,172 @@ body {
     .info-card {
         flex: 1 1 100%;
     }
+}
+
+.orders-wrapper {
+    background-color: #e9eeee; /* Matches the card color in your screenshot */
+    border-radius: 10px;
+}
+
+.orders-title {
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+.custom-orders-table th {
+    background-color: transparent;
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: none;
+}
+
+.custom-orders-table td {
+    background-color: #ffffff;
+    font-size: 14px;
+    padding: 12px 16px;
+    vertical-align: middle;
+    border-bottom: 10px solid #e9eeee;
+    border-radius: 6px;
+}
+
+.status-dropdown {
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 8px;
+    background-color: #fff;
+    width: 100%;
+}
+
+.sales-wrapper {
+    background-color: #f2f4f5;
+    border-radius: 10px;
+}
+
+.sales-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #333;
+}
+
+.sales-table th {
+    background-color: transparent;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    border-bottom: none;
+}
+
+.sales-table td {
+    background-color: #e6ecef;
+    font-size: 14px;
+    padding: 12px 16px;
+    border-bottom: 10px solid #f2f4f5;
+    border-radius: 6px;
+}
+
+.edit-btn {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.profile-card {
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+}
+
+.about-card {
+    background-color: #f2f4f5;
+    border: 1px solid #dcdcdc;
+}
+
+.text-sm {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.add-product-form {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #EAEFEF;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-product-form h1 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.add-product-form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.add-product-form input[type="text"],
+.add-product-form input[type="number"],
+.add-product-form input[type="file"],
+.add-product-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #999;
+    border-radius: 6px;
+    background-color: #d3d3d3;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.add-product-form textarea {
+    height: 100px;
+    resize: none;
+}
+
+.add-product-form button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #ccc;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-product-form button:hover {
+    background-color: #bbb;
+}
+
+.alert {
+    max-width: 400px;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }

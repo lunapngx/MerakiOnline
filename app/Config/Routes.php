@@ -57,19 +57,15 @@ $routes->get('api/check_products', 'UpdateController::checkProducts', ['as' => '
 // Admin Routes (Secured by a filter)
 $routes->group('admin', ['filter' => 'auth-groups:superadmin,admin'], function($routes) {
     $routes->get('/', 'Admin\Dashboard::index', ['as' => 'admin-dashboard']);
-
-    // Admin Products Routes - REMOVED 'admin/' prefix from paths
     $routes->get('products', 'Admin\Products::index', ['as' => 'products-index']);
     $routes->get('products/new', 'Admin\Products::new', ['as' => 'products-new']);
-    $routes->post('products/create', 'Admin\Products::create', ['as' => 'products-create']);
+    $routes->post('products', 'Admin\Products::create', ['as' => 'products-create']);
     $routes->get('products/edit/(:num)', 'Admin\Products::edit/$1', ['as' => 'products-edit']);
-    $routes->post('products/update/(:num)', 'Admin\Products::update/$1', ['as' => 'products-update']);
-    $routes->get('products/delete/(:num)', 'Admin\Products::delete/$1', ['as' => 'products-delete']);
-    $routes->get('products/show/(:num)', 'Admin\Products::show/$1', ['as' => 'products-show']);
-
+    $routes->put('products/(:num)', 'Admin\Products::update/$1', ['as' => 'products-update']);
+    $routes->delete('products/(:num)', 'Admin\Products::delete/$1', ['as' => 'products-delete']);
+    $routes->get('product/(:segment)', 'Admin\Products::show/$1', ['as' => 'product-detail']);
     $routes->get('orders', 'Admin\Orders::index', ['as' => 'admin-orders']);
     $routes->get('customer', 'Admin\Customer::index', ['as' => 'admin-customer']);
-    $routes->get('users', 'Admin\Users::index', ['as' => 'admin-users']);
     $routes->get('sales-report', 'Admin\SalesReport::index', ['as' => 'admin-sales-report']);
     $routes->get('account', 'Admin\AdminAccount::index', ['as' => 'admin-account']);
 });

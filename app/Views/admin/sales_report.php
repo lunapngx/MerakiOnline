@@ -1,32 +1,34 @@
 <?= $this->extend('admin/layout/main') ?>
 
-<?= $this->section('title') ?><?= esc($title) ?><?= $this->endSection() ?>
-
-<?= $this->section('styles') ?>
-    <link rel="stylesheet" href="<?= base_url('public/assets/css/admin.css') ?>">
-<?= $this->endSection() ?>
-
 <?= $this->section('content') ?>
-    <div class="container admin-dashboard-page">
-        <div class="admin-header-nav mb-4 bg-white py-3 shadow-sm rounded-bottom">
-            <div class="container d-flex justify-content-center">
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-dashboard') ?>">HOME</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin_products') ?>">PRODUCTS</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin_orders') ?>">ORDERS</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="<?= url_to('admin_sales_report') ?>">SALES REPORT</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin_account') ?>">ADMIN ACCOUNT</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <h2>Sales Report</h2>
-
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <p><strong>Total Sales:</strong> ₱<?= esc(number_format($report['total_sales'] ?? 0, 2)) ?></p>
-                <p><strong>Total Orders:</strong> <?= esc($report['total_orders'] ?? 0) ?></p>
-            </div>
+<div class="container py-4">
+    <div class="sales-wrapper p-4 rounded">
+        <div class="table-responsive">
+            <table class="table sales-table align-middle mb-0">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Sales</th>
+                    <th class="text-end">...</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($products as $product): ?>
+                    <tr>
+                        <td><?= esc($product['name']) ?></td>
+                        <td><?= esc($product['price']) ?></td>
+                        <td><?= esc($product['stock']) ?></td>
+                        <td><?= esc($product['sales']) ?></td>
+                        <td class="text-end">
+                            <a href="<?= site_url('admin/products/edit/' . $product['id']) ?>" class="edit-btn">Edit</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 <?= $this->endSection() ?>

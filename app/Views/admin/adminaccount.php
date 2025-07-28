@@ -1,60 +1,58 @@
 <?= $this->extend('admin/layout/main') ?>
 
-<?= $this->section('title') ?>Admin Account<?= $this->endSection() ?>
-
 <?= $this->section('content') ?>
-    <div class="container admin-dashboard-page">
-        <div class="admin-header-nav mb-4 bg-white py-3 shadow-sm rounded-bottom">
-            <div class="container d-flex justify-content-center">
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-dashboard') ?>">HOME</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin_products') ?>">PRODUCTS</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin_orders') ?>">ORDERS</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin_sales_report') ?>">SALES REPORT</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="<?= url_to('admin_account') ?>">ADMIN ACCOUNT</a></li>
-                </ul>
+
+<div class="container py-4">
+    <div class="row g-4">
+        <!-- Profile Card -->
+        <div class="col-md-4">
+            <div class="profile-card text-center p-4 shadow-sm rounded">
+                <img src="/path/to/profile.jpg" alt="Profile" class="profile-image mb-3">
+                <h5 class="mb-1">Verna Riza Rodriguez</h5>
+                <p class="text-muted small">Meraki Giftshop Owner</p>
             </div>
         </div>
 
-        <h2>Admin Account Settings</h2>
-
-        <?php if (session()->getFlashdata('success')): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <?= session()->getFlashdata('success') ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <!-- About & Details -->
+        <div class="col-md-8">
+            <div class="about-card p-4 shadow-sm rounded mb-4">
+                <h6><strong>About</strong></h6>
+                <p class="mb-0 text-sm">
+                    I, Verna Riza Rodriguez the CEO of Meraki Giftshop started this business at the age of 15 during pandemic, as a self-taught artist.
+                    I really love to learn and explore new things and hobbies and turn it into something that can give me happiness and motivation to keep going using my passion in arts and crafts putting my soul, creativity and love in every masterpiece.
+                    So when you buy in our shop, you're not just buying an item—you're also having a piece of me and my dreams as well.
+                </p>
             </div>
-        <?php endif; ?>
-        <?php if (session()->getFlashdata('error')): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?= session()->getFlashdata('error') ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
 
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <h5 class="card-title mb-3">Admin Profile Information</h5>
-                <p><strong>Username:</strong> <?= session()->get('admin_username') ?></p>
-                <p><strong>Full Name:</strong> <?= session()->get('admin_fullname') ?></p>
-                <hr>
-                <h5 class="card-title mb-3">Change Password</h5>
-                <form action="/admin/update-password" method="post">
-                    <?= csrf_field() ?>
-                    <div class="mb-3">
-                        <label for="current_password" class="form-label">Current Password</label>
-                        <input type="password" class="form-control" id="current_password" name="current_password" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="new_password" class="form-label">New Password</label>
-                        <input type="password" class="form-control" id="new_password" name="new_password" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirm_password" class="form-label">Confirm New Password</label>
-                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Update Password</button>
-                </form>
+            <div class="about-card p-4 shadow-sm rounded">
+                <h6><strong>Profile Details</strong></h6>
+                <div class="row mb-2">
+                    <div class="col-4"><strong>Full Name</strong></div>
+                    <div class="col-8">Verna Riza Rodriguez</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4"><strong>Position</strong></div>
+                    <div class="col-8">Owner</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4"><strong>Country</strong></div>
+                    <div class="col-8">Philippines</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4"><strong>Address</strong></div>
+                    <div class="col-8">08 Dapdap St. Igi Central Village Brgy. Pinagsama Taguig City</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4"><strong>Phone</strong></div>
+                    <div class="col-8">+639387802279</div>
+                </div>
+                <div class="row">
+                    <div class="col-4"><strong>Email</strong></div>
+                    <div class="col-8">vernarodriguez1220@gmail.com</div>
+                </div>
             </div>
         </div>
     </div>
+</div>
+
 <?= $this->endSection() ?>
