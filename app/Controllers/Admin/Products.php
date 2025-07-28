@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\ProductModel;
 use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\RedirectResponse;
+use App\Models\SystemStatusModel;
 
 class Products extends BaseController
 {
