@@ -18,7 +18,7 @@
             <div class="d-flex py-3 align-items-center justify-content-between">
 
                 <a href="<?= url_to('admin-dashboard') ?>" class="logo d-flex align-items-center gap-2">
-                    <img src="/img/meraki-logo.png" alt="Meraki Gift Shop Logo" class="meraki-logo" style="height: 40px;">
+                    <img src="<?= base_url('assets/img/logo.png') ?>" alt="Meraki Gift Shop Logo" class="meraki-logo" style="height: 40px;">
                     <h1 class="sitename m-0">Meraki Shop</h1>
                 </a>
 

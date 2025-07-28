@@ -17,10 +17,22 @@
 
         <?php if (session()->getFlashdata('error')): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?= session()->getFlashdata('error') ?>
+                <?= esc(session()->getFlashdata('error')) ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
+
+        <?php if (session()->getFlashdata('errors')): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul class="mb-0">
+                    <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                        <li><?= esc($error) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+
 
         <div class="card shadow-sm">
             <div class="card-body">
@@ -65,11 +77,14 @@
                 </div>
                 <div class="mb-3">
                     <label for="category_id" class="form-label">Category</label>
-                    <select class="form-select" id="category_id" name="category_id" required>
+                    <select class="form-control" id="category_id" name="category_id" required>
                         <option value="">Select Category</option>
-                        <?php if (isset($categories) && !empty($categories)): ?> // Check if categories are passed and not empty
+                        <?php if (!empty($categories)): // Check if categories array is not empty ?>
                             <?php foreach ($categories as $category): ?>
-                                <option value="<?= esc($category['id']) ?>" <?= set_select('category_id', $category['id'], false) ?>><?= esc($category['name']) ?></option>
+                                <option value="<?= esc($category->id) ?>" // Changed $category['id'] to $category->id
+                                <?= set_select('category_id', $category->id) ?>> // Changed $category['id'] to $category->id
+                                <?= esc($category->name) ?> // Changed $category['name'] to $category->name
+                                </option>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <option value="">No categories available</option>

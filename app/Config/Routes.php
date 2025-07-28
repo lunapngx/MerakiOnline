@@ -8,8 +8,11 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->get('about', 'Home::about', ['as' => 'about']);
 
-// Categories route
-$routes->get('categories', 'CategoryController::index', ['as' => 'categories_list']);
+// Categories route (existing)
+$routes->get('category', 'CategoryController::index', ['as' => 'categories-list']);
+
+// Add this new route for individual categories
+$routes->get('category/(:any)', 'CategoryController::show/$1', ['as' => 'category']);
 
 // Public routes for Shield authentication
 service('auth')->routes($routes);

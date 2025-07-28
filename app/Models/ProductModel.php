@@ -7,10 +7,9 @@ class ProductModel extends Model
     protected $table            = 'products';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = 'object'; // Use 'array' if you want associative arrays
+    protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
 
-    // Make sure all columns here match your actual `products` table
     protected $allowedFields = [
         'name',
         'description',

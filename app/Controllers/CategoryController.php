@@ -2,43 +2,47 @@
 
 namespace App\Controllers;
 
-use App\Models\CategoryModel; // From remote
-use App\Models\ProductModel; // From remote
-
-use CodeIgniter\Controller; // Assuming BaseController extends CodeIgniter\Controller
+use App\Models\CategoryModel;
+use App\Models\ProductModel;
+use CodeIgniter\Exceptions\PageNotFoundException; // Make sure this is imported
 
 class CategoryController extends BaseController
 {
-    public function index($slug = null) // Adopt remote's signature to allow for slug
+    protected $categoryModel;
+    protected $productModel;
+
+    public function __construct()
     {
-        $categoryModel = new CategoryModel();
-        $productModel = new ProductModel();
-
-        if ($slug === null) {
-            // Logic from remote: If no slug, show all categories
-            $data['categories'] = $categoryModel->findAll();
-            // Your original view for index was 'category/index', remote was 'Category/index'
-            // Let's standardize to 'Category/index' for consistency.
-            return view('content/category', $data);
-        }
-
-        // Logic from remote: Find category by slug and its products
-        $category = $categoryModel->where('slug', $slug)->first();
-
-        if (!$category) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Cannot find the category: ' . $slug);
-        }
-
-        $data['category'] = $category;
-        $data['products'] = $productModel->where('category_id', $category['id'])->findAll();
-
-        return view('Product/index', $data); // Remote's view for products in a category
+        $this->categoryModel = new CategoryModel();
+        $this->productModel = new ProductModel();
     }
 
-    // Your original comment block is kept.
-    // You can add other methods here, e.g., to display products within a specific category
-    // public function show($slug)
-    // {
-    //     // Logic to fetch a specific category and its products
-    // }
+    // ... (your existing index method)
+
+    public function show($identifier)
+    {
+        // Attempt to find category by ID first
+        $category = $this->categoryModel->find($identifier);
+
+        // If not found by ID, try finding by name/slug (assuming 'slug' column exists and is unique)
+        if (empty($category)) {
+            $category = $this->categoryModel->where('slug', $identifier)->first();
+        }
+
+        // If category is still empty, throw 404
+        if (empty($category)) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        // Fetch products belonging to this category
+        $productsInCategories = $this->productModel->where('category_id', $category->id)->findAll();
+
+        $data = [
+            'title'    => $category->name . ' Products',
+            'category' => $category,
+            'products' => $productsInCategories,
+        ];
+
+        return view('content/category_detail', $data);
+    }
 }

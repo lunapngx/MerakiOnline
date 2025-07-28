@@ -26,14 +26,14 @@ use App\Models\CategoryModel;
                     <?php if (!empty($allCategories)): ?>
                         <?php foreach ($allCategories as $cat): ?>
                             <li>
-                                <a href="<?= url_to('category', $cat['slug'] ?? $cat['id']) ?>">
-                                    <?= esc($cat['name']) ?> <i class="bi bi-chevron-right"></i>
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
-                    <?php else: ?>
+                                <a href="<?= url_to('category', $cat->id) ?>">
+                                    <?= esc($cat->name) ?> <i class="bi bi-chevron-right"></i>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php else: ?>
                         <li><p>No categories found.</p></li>
-                    <?php endif; ?>
+                        36                     <?php endif; ?>
                 </ul>
             </nav>
         </div>

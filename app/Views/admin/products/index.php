@@ -33,13 +33,13 @@
             <tbody>
             <?php foreach ($products as $product) : ?>
                 <tr>
-                    <td><?= esc($product['id']) ?></td>
-                    <td><img src="<?= base_url($product['image']) ?>" alt="<?= esc($product['name']) ?>" width="50"></td>
-                    <td><a href="<?= url_to('product-detail', $product['id']) ?>"><?= esc($product['name']) ?></a></td>
-                    <td>$<?= esc(number_format($product['price'], 2)) ?></td>
+                    <td><?= esc($product->id) ?></td>
+                    <td><img src="<?= base_url($product->image) ?>" alt="<?= esc($product->name) ?>" width="50"></td>
+                    <td><a href="<?= url_to('product-detail', $product->id) ?>"><?= esc($product->name) ?></a></td>
+                    <td>$<?= esc(number_format($product->price, 2)) ?></td> // Changed $product['price']
                     <td>
-                        <a href="<?= url_to('products-edit', $product['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="<?= url_to('products-delete', $product['id']) ?>" method="post" onsubmit="return confirm('Are you sure?')" class="d-inline">
+                        <a href="<?= url_to('products-edit', $product->id) ?>" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="<?= url_to('products-delete', $product->id) ?>" method="post" onsubmit="return confirm('Are you sure?')" class="d-inline"> // Changed $product['id']
                             <?= csrf_field() ?>
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>

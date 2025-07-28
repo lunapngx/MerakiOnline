@@ -36,11 +36,16 @@ class CreateProductsTable extends Migration
                 'constraint' => '255',
                 'null' => true,
             ],
-            'category_id' => [ // Add this new field
+            'category_id' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
-                'null' => true, // Assuming category_id can be null or adjust as per your logic
+                'null' => true,
+            ],
+            'is_active' => [ // Add this new field
+                'type' => 'TINYINT',
+                'constraint' => 1,
+                'default' => 1,
             ],
             'created_at datetime default current_timestamp',
             'updated_at datetime default current_timestamp on update current_timestamp',
