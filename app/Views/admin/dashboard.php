@@ -19,25 +19,10 @@
                     <div class="logo-container">
                         <img src="/img/meraki-logo.png" alt="Meraki Gift Shop Logo" class="meraki-logo">
                     </div>
-                    <div class="search-bar-container">
-                        <input type="text" placeholder="Search...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </div>
                     <div class="nav-icons-container">
                         <a href="#"><i class="far fa-user"></i></a>
-                        <a href="#"><i class="far fa-heart"></i></a>
-                        <a href="#"><i class="fas fa-shopping-cart"></i></a>
                     </div>
                 </div>
-                <nav class="main-navigation">
-                    <ul>
-                        <li><a href="<?= url_to('admin-dashboard') ?>">HOME</a></li>
-                        <li><a href="<?= url_to('products-index') ?>">PRODUCTS</a></li>
-                        <li><a href="<?= url_to('admin-orders') ?>">ORDERS</a></li>
-                        <li><a href="<?= url_to('admin-users') ?>">CUSTOMERS</a></li>
-                        <li><a href="#">SALES REPORT</a></li>
-                    </ul>
-                </nav>
                 <div class="dashboard-content-area">
                     <div class="row info-cards-row">
                         <div class="col-lg-3 col-6">
