@@ -78,12 +78,12 @@
         <div class="container-fluid container-xl">
             <div class="position-relative">
                 <nav id="navmenu" class="navmenu">
-                    <ul class="nav nav-pills">
-                        <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-dashboard') ?>">HOME</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-products') ?>">PRODUCTS</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-orders') ?>">ORDERS</a></li> </ul>
-                        <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-customer') ?>">CUSTOMERS</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-sales-report') ?>">SALE REPORT</a></li>
+                    <ul>
+                        <li><a href="<?= url_to('admin-dashboard') ?>">HOME</a></li>
+                        <li><a href="<?= url_to('admin-products') ?>">PRODUCTS</a></li>
+                        <li><a href="<?= url_to('admin-orders') ?>">ORDERS</a></li>
+                        <li><a href="<?= url_to('admin-customer') ?>">CUSTOMERS</a></li>
+                        <li><a href="<?= url_to('admin-sales-report') ?>">SALE REPORT</a></li>
                     </ul>
                 </nav>
             </div>

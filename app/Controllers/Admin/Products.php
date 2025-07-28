@@ -7,16 +7,19 @@ use App\Models\ProductModel;
 use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\RedirectResponse;
 use App\Models\SystemStatusModel;
+use App\Models\CategoryModel; // Add this line to import CategoryModel
 
 class Products extends BaseController
 {
     protected ProductModel $productModel;
-    protected SystemStatusModel $systemStatusModel; // Add this line
+    protected SystemStatusModel $systemStatusModel;
+    protected CategoryModel $categoryModel;
 
     public function __construct()
     {
         $this->productModel = new ProductModel();
-        $this->systemStatusModel = new SystemStatusModel(); // Add this line
+        $this->systemStatusModel = new SystemStatusModel();
+        $this->categoryModel = new CategoryModel();
     }
 
     /**
@@ -32,7 +35,22 @@ class Products extends BaseController
         return view('admin/products/index', $data);
     }
 
-    // ... (rest of the controller code)
+    /**
+     * Displays the form to create a new product.
+     * Add this method if it doesn't exist, or modify it.
+     */
+    public function new(): string
+    {
+        helper('form'); // Add this line to load the form helper
+
+        $data = [
+            'title'      => 'Add New Product',
+            'categories' => $this->categoryModel->findAll(),
+            'validation' => service('validation'),
+        ];
+
+        return view('admin/products/add_product', $data);
+    }
 
     /**
      * Handles the form submission for creating a new product.
@@ -41,11 +59,14 @@ class Products extends BaseController
      */
     public function create(): RedirectResponse
     {
+        // ... (existing code for validation rules) ...
+
         $rules = [
             'name'        => 'required|max_length[255]',
             'description' => 'required',
             'price'       => 'required|numeric',
             'stock'       => 'required|integer',
+            'category_id' => 'required|integer', // Add validation rule for category_id
             'image'       => [
                 'rules'  => 'uploaded[image]|max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
                 'errors' => [
@@ -96,7 +117,11 @@ class Products extends BaseController
             return redirect()->to(url_to('products-index'))->with('error', 'Product not found.');
         }
 
-        $data = ['product' => $product];
+        $data = [
+            'product'    => $product,
+            'categories' => $this->categoryModel->findAll(), // Fetch all categories
+            'validation' => service('validation'), // Pass validation service for displaying errors
+        ];
 
         return view('admin/products/edit', $data);
     }
@@ -119,6 +144,7 @@ class Products extends BaseController
             'description' => 'required',
             'price'       => 'required|numeric',
             'stock'       => 'required|integer',
+            'category_id' => 'required|integer', // Add validation rule for category_id
         ];
 
         $file = $this->request->getFile('image');
@@ -158,7 +184,6 @@ class Products extends BaseController
 
         return redirect()->back()->withInput()->with('error', 'Failed to update product.');
     }
-
     /**
      * Deletes a product.
      *

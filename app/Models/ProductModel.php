@@ -8,7 +8,8 @@ class ProductModel extends Model
 {
     protected $table = 'products';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['name', 'description', 'price', 'stock', 'image'];
+    // Add the new fields to $allowedFields
+    protected $allowedFields = ['name', 'description', 'price', 'stock', 'image', 'original_price', 'category_id', 'colors', 'sizes']; // MODIFIED LINE
     protected $returnType    = 'array';
 
     /**
@@ -30,6 +31,11 @@ class ProductModel extends Model
                     'mime_in'  => 'The image must be a JPG, JPEG, or PNG.',
                 ],
             ],
+            // You might want to add validation rules for the new fields here as well
+            'original_price' => 'permit_empty|numeric', // 'permit_empty' if optional
+            'category_id'    => 'required|integer',     // category_id should be an integer and required
+            'colors'         => 'permit_empty',         // Can be string or JSON, validate as needed
+            'sizes'          => 'permit_empty',         // Can be string or JSON, validate as needed
         ];
     }
 }

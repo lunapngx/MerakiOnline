@@ -31,15 +31,27 @@
     <label for="stock">Stock:</label>
     <input type="number" name="stock" value="<?= old('stock', $product['stock']) ?>">
 
+    <label for="category_id">Category:</label> // Add this section
+    <select name="category_id" id="category_id" required>
+        <option value="">Select Category</option>
+        <?php if (isset($categories) && !empty($categories)): ?>
+            <?php foreach ($categories as $category): ?>
+                <option value="<?= esc($category['id']) ?>" <?= set_select('category_id', $category['id'], (isset($product['category_id']) && $product['category_id'] == $category['id'])) ?>><?= esc($category['name']) ?></option>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <option value="">No categories available</option>
+        <?php endif; ?>
+    </select>
+    <?php if (isset($validation) && $validation->hasError('category_id')) : ?>
+        <div class="text-danger"><?= $validation->getError('category_id') ?></div>
+    <?php endif; ?>
+
     <label for="image">Current Image:</label>
     <?php if ($product['image']): ?>
         <img src="<?= base_url($product['image']) ?>" alt="<?= esc($product['name']) ?>" width="100">
     <?php else: ?>
         <p>No image uploaded.</p>
     <?php endif; ?>
-
-    <label for="image">New Image:</label>
-    <input type="file" name="image">
 
     <button type="submit">Update Product</button>
 </form>

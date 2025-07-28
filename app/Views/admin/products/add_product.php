@@ -15,7 +15,7 @@
                     <li class="nav-item"><a class="nav-link active" href="<?= url_to('admin-products') ?>">PRODUCTS</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-orders') ?>">ORDERS</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-sales-report') ?>">SALES REPORT</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin_account') ?>">ADMIN ACCOUNT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= url_to('admin-account') ?>">ADMIN ACCOUNT</a></li>
                 </ul>
             </div>
         </div>
@@ -31,7 +31,7 @@
 
         <div class="card shadow-sm">
             <div class="card-body">
-                <?= form_open_multipart('/admin/products/add') ?>
+                <?= form_open_multipart(url_to('products-create')) ?>
                 <?= csrf_field() ?>
                 <div class="mb-3">
                     <label for="name" class="form-label">Product Name</label>
@@ -74,9 +74,13 @@
                     <label for="category_id" class="form-label">Category</label>
                     <select class="form-select" id="category_id" name="category_id" required>
                         <option value="">Select Category</option>
-                        <?php foreach ($categories as $category): ?>
-                            <option value="<?= esc($category['id']) ?>" <?= set_select('category_id', $category['id']) ?>><?= esc($category['name']) ?></option>
-                        <?php endforeach; ?>
+                        <?php if (isset($categories) && !empty($categories)): ?> // Check if categories are passed and not empty
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?= esc($category['id']) ?>" <?= set_select('category_id', $category['id'], false) ?>><?= esc($category['name']) ?></option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option value="">No categories available</option>
+                        <?php endif; ?>
                     </select>
                     <?php if (isset($validation) && $validation->hasError('category_id')) : ?>
                         <div class="text-danger"><?= $validation->getError('category_id') ?></div>
@@ -104,7 +108,7 @@
                     <?php endif; ?>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Product</button>
-                <a href="<?= url_to('admin_products') ?>" class="btn btn-secondary">Cancel</a>
+                <a href="<?= url_to('admin-products') ?>" class="btn btn-secondary">Cancel</a>
                 <?= form_close() ?>
             </div>
         </div>

@@ -89,7 +89,7 @@ class AccountController extends BaseController
             'user' => auth()->user(),
             // Data for payment methods
         ];
-        return view('layouts/master', ['title' => $data['title'], 'content' => view('content/myprofile', $data)]);
+        return view('layouts/masterr', ['title' => $data['title'], 'content' => view('content/myprofile', $data)]);
     }
 
     /**
@@ -121,7 +121,7 @@ class AccountController extends BaseController
             'user' => auth()->user(),
             // Data for user addresses
         ];
-        return view('layouts/master', ['title' => $data['title'], 'content' => view('content/myprofile', $data)]);
+        return view('layouts/masterr', ['title' => $data['title'], 'content' => view('content/myprofile', $data)]);
     }
 
     /**

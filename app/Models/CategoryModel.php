@@ -4,30 +4,28 @@ use CodeIgniter\Model;
 
 class CategoryModel extends Model
 {
-    protected $table = 'product_categories'; // Make sure your category table is named 'categories'
+    protected $table = 'product_categories'; // Ensure this matches your actual table name
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
 
-    protected $returnType     = 'array'; // Or 'object'
-    protected $useSoftDeletes = false; // Set to true if you use soft deletes
+    protected $returnType     = 'array';
+    protected $useSoftDeletes = false;
 
-    // These fields must match the columns in your 'categories' database table
+    // These fields must match the columns in your 'product_categories' database table
     protected $allowedFields = [
         'name',
-        'slug', // Essential for clean URLs if you use slugs
-        'description', // Optional: if your categories have descriptions
-        // Add other category-related fields here
+        'slug',
+        'description',
+        // Add other category-related fields here if you have them
     ];
 
-    // Dates
-    protected $useTimestamps = false; // Set to true if you have 'created_at', 'updated_at', etc.
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
-    // Validation
     protected $validationRules      = [];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
