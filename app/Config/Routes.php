@@ -9,7 +9,8 @@ $routes->get('/', 'Home::index');
 $routes->get('about', 'Home::about', ['as' => 'about']);
 
 // Categories route (existing)
-$routes->get('category', 'CategoryController::index', ['as' => 'categories-list']);
+$routes->get('categories', 'CategoryController::index', ['as' => 'categories']);
+
 
 // Add this new route for individual categories
 $routes->get('category/(:any)', 'CategoryController::show/$1', ['as' => 'category']);

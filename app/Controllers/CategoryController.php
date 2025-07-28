@@ -17,7 +17,18 @@ class CategoryController extends BaseController
         $this->productModel = new ProductModel();
     }
 
-    // ... (your existing index method)
+    public function index()
+    {
+        $allCategories = $this->categoryModel->findAll();
+
+        $data = [
+            'title'         => 'All Categories',
+            'allCategories' => $allCategories,
+        ];
+
+        return view('content/category', $data);
+    }
+
 
     public function show($identifier)
     {

@@ -25,16 +25,21 @@ use App\Models\CategoryModel;
                     ?>
                     <?php if (!empty($allCategories)): ?>
                         <?php foreach ($allCategories as $cat): ?>
-                            <li>
-                                <a href="<?= url_to('category', $cat->id) ?>">
-                                    <?= esc($cat->name) ?> <i class="bi bi-chevron-right"></i>
+                            <?php
+                            // Prioritize slug for cleaner URLs, fall back to ID if slug is empty
+                            $identifier = !empty($cat->slug) ? $cat->slug : $cat->id;
+                            ?>
+                            <?php if (!empty($identifier)): // Ensure we have a valid identifier ?>
+                                <li>
+                                    <a href="<?= url_to('category', $identifier) ?>">
+                                        <?= esc($cat->name) ?> <i class="bi bi-chevron-right"></i>
                                     </a>
                                 </li>
-                            <?php endforeach; ?>
-                        <?php else: ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
                         <li><p>No categories found.</p></li>
-                        36                     <?php endif; ?>
-                </ul>
+                    <?php endif; ?>
             </nav>
         </div>
 

@@ -102,7 +102,7 @@
                     <ul>
                         <li><a href="<?= base_url('/') ?>" class="active">Home</a></li>
                         <li><a href="<?= base_url('about') ?>">About</a></li>
-                        <li><a href="<?= url_to('categories_list') ?>">Category</a></li>
+                        <li><a href="<?= url_to('categories') ?>">Category</a></li>
                         <li><a href="<?= url_to('cart_view') ?>">Cart</a></li>
                         <li><a href="<?= url_to('checkout_view') ?>">Checkout</a></li>
                     </ul>

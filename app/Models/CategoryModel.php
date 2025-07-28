@@ -4,6 +4,7 @@ use CodeIgniter\Model;
 
 class CategoryModel extends Model
 {
+
     protected $table            = 'categories';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
@@ -11,7 +12,7 @@ class CategoryModel extends Model
     protected $useSoftDeletes   = false;
 
 
-    protected $allowedFields    = ['name', 'description'];
+    protected $allowedFields    = ['name', 'description', 'slug'];
 
 
     protected $useTimestamps    = false;
