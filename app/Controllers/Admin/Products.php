@@ -101,7 +101,7 @@ class Products extends BaseController
 
         if ($this->productModel->insert($data)) {
             $this->systemStatusModel->update(1, ['last_product_update' => date('Y-m-d H:i:s')]);
-            return redirect()->to(url_to('products-index'))->with('success', 'Product created successfully.');
+            return redirect()->to(url_to('admin-products'))->with('success', 'Product created successfully.');
         }
 
         return redirect()->back()->withInput()->with('error', 'Failed to create product.');
@@ -119,7 +119,7 @@ class Products extends BaseController
         $product = $this->productModel->find($id);
 
         if ($product === null) {
-            return redirect()->to(url_to('products-index'))->with('error', 'Product not found.');
+            return redirect()->to(url_to('admin-products'))->with('error', 'Product not found.');
         }
 
         $data = [
@@ -140,7 +140,7 @@ class Products extends BaseController
     {
         $product = $this->productModel->find($id);
         if ($product === null) {
-            return redirect()->to(url_to('products-index'))->with('error', 'Product not found.');
+            return redirect()->to(url_to('admin-products'))->with('error', 'Product not found.');
         }
 
         // Validation rules for update (image is optional)
@@ -149,11 +149,11 @@ class Products extends BaseController
             'description' => 'required',
             'price'       => 'required|numeric',
             'stock'       => 'required|integer',
-            'category_id' => 'required|integer', // Add validation rule for category_id
+            'category_id' => 'required|integer',
         ];
 
         $file = $this->request->getFile('image');
-        if ($file->isValid() && ! $file->hasMoved()) {
+        if ($file && $file->isValid() && ! $file->hasMoved()) {
             $rules['image'] = [
                 'rules'  => 'uploaded[image]|max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
                 'errors' => [
@@ -169,11 +169,18 @@ class Products extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        $data = $this->request->getPost();
+        $data = [
+            'name'        => $this->request->getPost('name'),
+            'description' => $this->request->getPost('description'),
+            'price'       => $this->request->getPost('price'),
+            'stock'       => $this->request->getPost('stock'),
+            'category_id' => $this->request->getPost('category_id'),
+        ];
 
-        if ($file->isValid() && ! $file->hasMoved()) {
-            // Delete old image if it exists
-            $oldImage = $product['image'] ?? null;
+        // Handle image replacement
+        if ($file && $file->isValid() && ! $file->hasMoved()) {
+            $oldImage = $product->image ?? null;
+
             if ($oldImage !== null && file_exists(FCPATH . $oldImage)) {
                 unlink(FCPATH . $oldImage);
             }
@@ -184,11 +191,12 @@ class Products extends BaseController
         }
 
         if ($this->productModel->update($id, $data)) {
-            return redirect()->to(url_to('products-index'))->with('success', 'Product updated successfully.');
+            return redirect()->to(url_to('admin-products'))->with('success', 'Product updated successfully.');
         }
 
         return redirect()->back()->withInput()->with('error', 'Failed to update product.');
     }
+
     /**
      * Deletes a product.
      *
@@ -196,24 +204,30 @@ class Products extends BaseController
      */
     public function delete($id = null): RedirectResponse
     {
+        if ($id === null || !is_numeric($id)) {
+            return redirect()->to(url_to('admin-products'))->with('error', 'Invalid product ID.');
+        }
+
         $product = $this->productModel->find($id);
 
-        if ($product === null) {
-            return redirect()->to(url_to('products-index'))->with('error', 'Product not found.');
+        if (!$product) {
+            return redirect()->to(url_to('admin-products'))->with('error', 'Product not found.');
         }
 
-        // Delete the associated image file
-        $oldImage = $product['image'] ?? null;
-        if ($oldImage !== null && file_exists(FCPATH . $oldImage)) {
-            unlink(FCPATH . $oldImage);
+        // Delete the image file if it exists
+        $imagePath = FCPATH . $product->image;
+        if (!empty($product->image) && file_exists($imagePath)) {
+            unlink($imagePath);
         }
 
+        // Delete the product record
         if ($this->productModel->delete($id)) {
-            return redirect()->to(url_to('products-index'))->with('success', 'Product deleted successfully.');
+            return redirect()->to(url_to('admin-products'))->with('success', 'Product deleted successfully.');
         }
 
-        return redirect()->to(url_to('products-index'))->with('error', 'Failed to delete product.');
+        return redirect()->to(url_to('admin-products'))->with('error', 'Failed to delete product.');
     }
+
 
     /**
      * Displays a single product's details.
@@ -225,7 +239,7 @@ class Products extends BaseController
         $product = $this->productModel->find($id);
 
         if ($product === null) {
-            return redirect()->to(url_to('products-index'))->with('error', 'Product not found.');
+            return redirect()->to(url_to('admin-products'))->with('error', 'Product not found.');
         }
 
         $data = ['product' => $product];
