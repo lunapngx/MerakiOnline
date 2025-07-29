@@ -17,7 +17,7 @@
         <p>No image available.</p>
     <?php endif; ?>
 
-    <a href="<?= url_to('products-index') ?>">Back to Products</a>
+    <a href="<?= url_to('admin-products') ?>">Back to Products</a>
 <?php else: ?>
     <p>Product not found.</p>
 <?php endif; ?>

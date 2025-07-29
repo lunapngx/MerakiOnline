@@ -10,6 +10,8 @@ class ProductModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
 
+
+
     protected $allowedFields = [
         'name',
         'description',

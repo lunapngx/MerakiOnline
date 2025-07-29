@@ -40,18 +40,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-display-section row">
-                    <div class="col-md-6">
-                        <div class="product-item">
-                            <img src="/img/product1.png" alt="Product 1">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="product-item">
-                            <img src="/img/product2.png" alt="Product 2">
-                        </div>
-                    </div>
-                </div>
             </div>
     </div></section>
     </div>

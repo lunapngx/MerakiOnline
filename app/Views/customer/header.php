@@ -46,28 +46,32 @@
                             </div>
                             <div class="dropdown-body">
                                 <?php if (auth()->loggedIn()): ?>
-                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account') ?>">
+                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account_profile') ?>">
                                         <i class="bi bi-person-circle me-2"></i>
                                         <span>My Profile</span>
                                     </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account_orders') ?>">
+                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account_profile') ?>#myOrders">
                                         <i class="bi bi-bag-check me-2"></i>
                                         <span>My Orders</span>
                                     </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account') ?>#wishlist">
+                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account_profile') ?>#wishlist">
                                         <i class="bi bi-heart me-2"></i>
                                         <span>My Wishlist</span>
                                     </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account_settings') ?>">
+                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('cart_view') ?>">
+                                        <i class="bi bi-cart3 me-2"></i>
+                                        <span>My Cart</span>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account_profile') ?>#accountSettings">
                                         <i class="bi bi-gear me-2"></i>
                                         <span>Settings</span>
                                     </a>
-                                <?php endif; // Closing the if block here to match the opening ?>
+                                <?php endif; ?>
                             </div>
                             <div class="dropdown-footer">
                                 <?php if (auth()->loggedIn()): ?>
-                                    <?php if (auth()->user() && auth()->user()->inGroup('admin')): // Check if user is in 'admin' group ?>
-                                        <a href="<?= url_to('admin-dashboard') ?>" class="btn btn-warning w-100 mb-2">Admin Dashboard</a>
+                                    <?php if (auth()->user() && auth()->user()->inGroup('admin')): ?>
+                                        <a href="<?= url_to('admin_dashboard') ?>" class="btn btn-warning w-100 mb-2">Admin Dashboard</a>
                                     <?php endif; ?>
                                     <a href="<?= url_to('logout') ?>" class="btn btn-outline-danger w-100">Logout</a>
                                 <?php else: ?>
@@ -78,12 +82,12 @@
                         </div>
                     </div>
 
-                    <a href="<?= url_to('account') ?>#wishlist" class="header-action-btn d-none d-md-block">
+                    <a href="<?= url_to('account_profile') ?>#wishlist" class="header-action-btn d-none d-md-block">
                         <i class="bi bi-heart"></i>
                         <span class="badge"></span>
                     </a>
 
-                    <a href="<?= url_to('cart_view') ?>" class="header-action-btn">
+                    <a href="<?= url_to('cart_view') ?>" class="header-action-btn d-none d-md-block">
                         <i class="bi bi-cart3"></i>
                         <span class="badge"></span>
                     </a>
