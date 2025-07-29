@@ -17,7 +17,6 @@ $routes->get('category/(:any)', 'CategoryController::show/$1', ['as' => 'categor
 $routes->get('category/(:num)', 'CategoryController::view/$1', ['as' => 'category-view']);
 $routes->get('category/(:segment)', 'CategoryController::show/$1', ['as' => 'category']);
 
-
 // Public routes for Shield authentication
 service('auth')->routes($routes);
 
