@@ -56,12 +56,12 @@ class RegisterController extends BaseController
         /** @var Session $authenticator */
         $authenticator = auth('session')->getAuthenticator();
 
-        // If an action has been defined, start it up.
         if ($authenticator->hasAction()) {
             return redirect()->route('auth-action-show');
         }
 
-        return $this->view(setting('Auth.views')['register']);
+        // ✅ This will show the Shield registration view
+        return view(setting('Auth.views')['register']);
     }
 
     /**
@@ -73,7 +73,6 @@ class RegisterController extends BaseController
             return redirect()->to(config('Auth')->registerRedirect());
         }
 
-        // Check if registration is allowed
         if (! setting('Auth.allowRegistration')) {
             return redirect()->back()->withInput()
                 ->with('error', lang('Auth.registerDisabled'));
@@ -81,19 +80,16 @@ class RegisterController extends BaseController
 
         $users = $this->getUserProvider();
 
-        // Validate here first, since some things,
-        // like the password, can only be validated properly here.
         $rules = $this->getValidationRules();
 
         if (! $this->validateData($this->request->getPost(), $rules, [], config('Auth')->DBGroup)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        // Save the user
         $allowedPostFields = array_keys($rules);
-        $user              = $users->createNewUser($this->request->getPost($allowedPostFields));
+        $user = $users->createNewUser($this->request->getPost($allowedPostFields));
 
-        // Workaround for email only registration/login
+        // Workaround for email-only login
         if ($user->username === null) {
             $user->username = null;
         }
@@ -104,7 +100,7 @@ class RegisterController extends BaseController
             return redirect()->back()->withInput()->with('errors', $users->errors());
         }
 
-        // To get the complete user object with ID, we need to get from the database
+        // Get the newly inserted user
         $user = $users->findById($users->getInsertID());
 
         // Add to default group
@@ -112,26 +108,19 @@ class RegisterController extends BaseController
 
         Events::trigger('register', $user);
 
-        /** @var Session $authenticator */
-        $authenticator = auth('session')->getAuthenticator();
+        // ✅ Make sure user is NOT auto-logged in
+        // ✅ DO NOT call $authenticator->startLogin($user)
+        // ✅ DO NOT call $authenticator->completeLogin($user)
 
-        $authenticator->startLogin($user);
-
-        // If an action has been defined for register, start it up.
-        $hasAction = $authenticator->startUpAction('register', $user);
-        if ($hasAction) {
-            return redirect()->route('auth-action-show');
-        }
-
-        // Set the user active
+        // Optionally activate account if you don’t require email verification
         $user->activate();
 
-        $authenticator->completeLogin($user);
+        dd('Logged in?', auth()->loggedIn());
 
-        // Success!
-        return redirect()->to(config('Auth')->registerRedirect())
-            ->with('message', lang('Auth.registerSuccess'));
+
+        return redirect()->route('login')->with('message', 'Registration successful. Please log in.');
     }
+
 
     /**
      * Returns the User provider

@@ -67,10 +67,10 @@ class Auth extends ShieldAuth
      * actions. This can be either of the following:
      *
      * 1. An absolute URL. E.g. http://example.com OR https://example.com
-     * 2. A named route that can be accessed using `route_to()` or `url_to()`
+     * 2. A named route that can be accessed using route_to() or url_to()
      * 3. A URI path within the application. e.g 'admin', 'login', 'expath'
      *
-     * If you need more flexibility you can override the `getUrl()` method
+     * If you need more flexibility you can override the getUrl() method
      * to apply any logic you may need.
      */
     public array $redirects = [
@@ -98,7 +98,7 @@ class Auth extends ShieldAuth
      * Custom Actions and Requirements:
      *
      * - All actions must implement \CodeIgniter\Shield\Authentication\Actions\ActionInterface.
-     * - Custom actions for "register" must have a class name that ends with the suffix "Activator" (e.g., `CustomSmsActivator`) ensure proper functionality.
+     * - Custom actions for "register" must have a class name that ends with the suffix "Activator" (e.g., CustomSmsActivator) ensure proper functionality.
      *
      * @var array<string, class-string<ActionInterface>|null>
      */
@@ -163,7 +163,7 @@ class Auth extends ShieldAuth
      * --------------------------------------------------------------------
      * Record Last Active Date
      * --------------------------------------------------------------------
-     * If true, will always update the `last_active` datetime for the
+     * If true, will always update the last_active datetime for the
      * logged-in user on every page request.
      * This feature only works when session/tokens/hmac/chain/jwt filter is active.
      *
@@ -218,7 +218,7 @@ class Auth extends ShieldAuth
      * The validation rules for username
      * --------------------------------------------------------------------
      *
-     * Do not use string rules like `required|valid_email`.
+     * Do not use string rules like required|valid_email.
      *
      * @var array<string, array<int, string>|string>
      */
@@ -237,7 +237,7 @@ class Auth extends ShieldAuth
      * The validation rules for email
      * --------------------------------------------------------------------
      *
-     * Do not use string rules like `required|valid_email`.
+     * Do not use string rules like required|valid_email.
      *
      * @var array<string, array<int, string>|string>
      */
@@ -318,7 +318,7 @@ class Auth extends ShieldAuth
      * is rejected.
      *
      * The accepted range is 0-100, with 0 (zero) meaning don't check similarity.
-     * Using values at either extreme of the *working range* (1-100) is
+     * Using values at either extreme of the working range (1-100) is
      * not advised. The low end is too restrictive and the high end is too permissive.
      * The suggested value for $maxSimilarity is 50.
      *
@@ -448,18 +448,16 @@ class Auth extends ShieldAuth
         $user = auth()->user();
         $session = session();
 
-        // If the user is logged in AND an admin, ALWAYS redirect them to the admin dashboard.
+        // Admins go to admin dashboard
         if (auth()->loggedIn() && ($user->inGroup('superadmin') || $user->inGroup('admin'))) {
             $session->removeTempdata('beforeLoginUrl');
             return $this->getUrl('admin-dashboard');
         }
 
-        // For all other users, use the 'beforeLoginUrl' if available, otherwise default to the account page.
-        $url = $session->getTempdata('beforeLoginUrl') ?? 'account';
-        $session->removeTempdata('beforeLoginUrl');
-
-        return $this->getUrl($url);
+        // Regular users go to homepage
+        return site_url('/');
     }
+
 
     /**
      * Returns the URL that a user should be redirected
@@ -478,10 +476,7 @@ class Auth extends ShieldAuth
      */
     public function registerRedirect(): string
     {
-        // New users should be redirected to their account page after registration.
-        $url = 'account';
-
-        return $this->getUrl($url);
+        return $this->getUrl('login');
     }
 
     /**

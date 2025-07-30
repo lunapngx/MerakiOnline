@@ -64,7 +64,7 @@ class Autoload extends AutoloadConfig
      * -------------------------------------------------------------------
      * Files
      * -------------------------------------------------------------------
-     * The files array provides a list of paths to __non-class__ files
+     * The files array provides a list of paths to _non-class_ files
      * that will be autoloaded. This can be useful for bootstrap operations
      * or for loading functions.
      *
@@ -89,4 +89,10 @@ class Autoload extends AutoloadConfig
      * @var list<string>
      */
     public $helpers = ['auth', 'setting'];
+
+    // app/Config/Autoload.php
+    public $libraries = [
+        'session', // Make sure 'session' is here
+        // ... other libraries
+    ];
 }

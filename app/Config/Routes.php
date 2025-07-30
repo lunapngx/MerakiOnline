@@ -8,14 +8,22 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->get('about', 'Home::about', ['as' => 'about']);
 
-// Categories route (existing)
+// Categories route
 $routes->get('categories', 'CategoryController::index', ['as' => 'categories']);
+$routes->get('category/filter/(:segment)', 'CategoryController::filter/$1');
 
+//mae
+$routes->get('login', 'LoginController::loginView');
+$routes->post('login', 'LoginController::loginAction');
+$routes->get('register', 'RegisterController::registerView');
+$routes->post('register', 'RegisterController::registerAction');
+$routes->get('products', 'ProductController::index', ['as' => 'products']);
+$routes->get('/collection', 'CollectionController::index', ['as' => 'collection']);
+// In app/Config/Routes.php
 
-// Add this new route for individual categories
-$routes->get('category/(:any)', 'CategoryController::show/$1', ['as' => 'category']);
-$routes->get('category/(:num)', 'CategoryController::view/$1', ['as' => 'category-view']);
-$routes->get('category/(:segment)', 'CategoryController::show/$1', ['as' => 'category']);
+$routes->get('collection', 'Product::collection');
+
+//mae
 
 // Public routes for Shield authentication
 service('auth')->routes($routes);

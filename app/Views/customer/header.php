@@ -1,3 +1,4 @@
+<!-- app/Views/customer/header.php -->
 <header id="header" class="header position-relative">
     <div class="top-bar py-2">
         <div class="container-fluid container-xl">
@@ -36,16 +37,17 @@
                         <i class="bi bi-search"></i>
                     </button>
 
-                    <div class="dropdown account-dropdown">
-                        <button class="header-action-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <div class="dropdown-header">
-                                <h6>Welcome to <span class="sitename">Meraki Shop</span></h6>
-                            </div>
-                            <div class="dropdown-body">
-                                <?php if (auth()->loggedIn()): ?>
+                    <?php if (auth()->loggedIn()): ?>
+                        <!-- User is logged in: Show the full account dropdown -->
+                        <div class="dropdown account-dropdown">
+                            <button class="header-action-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <div class="dropdown-header">
+                                    <h6>Welcome to <span class="sitename">Meraki Shop</span></h6>
+                                </div>
+                                <div class="dropdown-body">
                                     <a class="dropdown-item d-flex align-items-center" href="<?= url_to('account_profile') ?>">
                                         <i class="bi bi-person-circle me-2"></i>
                                         <span>My Profile</span>
@@ -66,28 +68,30 @@
                                         <i class="bi bi-gear me-2"></i>
                                         <span>Settings</span>
                                     </a>
-                                <?php endif; ?>
-                            </div>
-                            <div class="dropdown-footer">
-                                <?php if (auth()->loggedIn()): ?>
+                                </div>
+                                <div class="dropdown-footer">
                                     <?php if (auth()->user() && auth()->user()->inGroup('admin')): ?>
-                                        <a href="<?= url_to('admin-dashboard') ?>" class="btn btn-warning w-100 mb-2">Admin Dashboard</a>
+                                        <a href="<?= url_to('admin_dashboard') ?>" class="btn btn-warning w-100 mb-2">Admin Dashboard</a>
                                     <?php endif; ?>
                                     <a href="<?= url_to('logout') ?>" class="btn btn-outline-danger w-100">Logout</a>
-                                <?php else: ?>
-                                    <a href="<?= url_to('login') ?>" class="btn btn-primary w-100 mb-2">Sign In</a>
-                                    <a href="<?= url_to('register') ?>" class="btn btn-outline-primary w-100">Register</a>
-                                <?php endif; ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php else: ?>
+                        <!-- User is NOT logged in: Show a simple button linking to login -->
+                        <a href="<?= url_to('login') ?>" class="header-action-btn">
+                            <i class="bi bi-person"></i>
+                        </a>
+                    <?php endif; ?>
 
-                    <a href="<?= url_to('account_profile') ?>#wishlist" class="header-action-btn d-none d-md-block">
+                    <!-- Standalone Wishlist Icon -->
+                    <a href="<?= auth()->loggedIn() ? url_to('account_profile') . '#wishlist' : url_to('login') ?>" class="header-action-btn d-none d-md-block">
                         <i class="bi bi-heart"></i>
                         <span class="badge"></span>
                     </a>
 
-                    <a href="<?= url_to('cart_view') ?>" class="header-action-btn d-none d-md-block">
+                    <!-- Standalone Cart Icon -->
+                    <a href="<?= auth()->loggedIn() ? url_to('cart_view') : url_to('login') ?>" class="header-action-btn d-none d-md-block">
                         <i class="bi bi-cart3"></i>
                         <span class="badge"></span>
                     </a>
@@ -106,9 +110,12 @@
                     <ul>
                         <li><a href="<?= base_url('/') ?>" class="active">Home</a></li>
                         <li><a href="<?= base_url('about') ?>">About</a></li>
-                        <li><a href="<?= url_to('categories') ?>">Category</a></li>
-                        <li><a href="<?= url_to('cart_view') ?>">Cart</a></li>
-                        <li><a href="<?= url_to('checkout_view') ?>">Checkout</a></li>
+                        <?php if (auth()->loggedIn()): ?>
+                            <!-- Show these links only if logged in -->
+                            <li><a href="<?= url_to('categories') ?>">Category</a></li>
+                            <li><a href="<?= url_to('cart_view') ?>">Cart</a></li>
+                            <li><a href="<?= url_to('checkout_view') ?>">Checkout</a></li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>
