@@ -618,7 +618,6 @@
 
 <footer class="bg-white shadow-inner py-6 mt-8">
     <div class="container mx-auto px-8 text-center text-gray-600">
-        &copy; 2023 Meraki Shop. All rights reserved.
     </div>
 </footer>
 

@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
-                    <img src="<?= base_url('assets/img/meraki-footer.png') ?>" alt="Meraki Gift Shop Logo" class="img-fluid" style="max-height: 150px;">
+                    <img src="<?= base_url('assets/img/meraki-footer.png') ?>" alt="Meraki Gift Shop Logo" class="img-fluid" style="max-height: 150px; display: block; margin: 0 auto;">
                 </div>
             </div>
         </div>
